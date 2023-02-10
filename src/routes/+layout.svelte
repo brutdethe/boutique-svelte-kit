@@ -8,6 +8,13 @@
         padding: 0 2em;
     }
     
+    footer {
+        border-top: 1px solid rgba(255, 62, 0, 0.1);
+        padding: 1.8rem 0.75rem 1rem;
+        position: relative;
+        z-index: 200;
+    }
+    
     .title {
         margin-bottom: 0;
         padding: 0;
@@ -33,11 +40,27 @@
         list-style-type: none;
     }
     
-    ul li {
+    footer ul {
+        margin: 0;
+        display: block;
+        float: left;
+    }
+    /* clearfix */
+    
+    ul::after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+    
+    li {
+        display: block;
+        float: left;
         margin-top: 0;
     }
     
-    a {
+    a,
+    a:visited {
         text-decoration: none;
         padding: 1em 0.5em;
         display: block;
@@ -91,3 +114,10 @@
 </header>
 
 <slot></slot>
+
+<footer class="section section-footer">
+    <ul class="container grid-lg">
+        <li><a href="/fr/confidentialite">confidentialité</a></li>
+        <li><a href="/fr/mentions-legales">mentions légales</a></li>
+    </ul>
+</footer>
