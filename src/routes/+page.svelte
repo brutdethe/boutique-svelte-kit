@@ -1,8 +1,3 @@
-<script>
-  import { PUBLIC_github_data_repo } from '$env/static/public'
-  console.log("github_data_repo", PUBLIC_github_data_repo)
-</script>
-
 <style>
   section {
     position: relative;

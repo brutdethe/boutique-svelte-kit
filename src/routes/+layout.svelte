@@ -1,3 +1,7 @@
+<script>
+  export let data  
+</script>
+
 <style>
     header {
         max-width: 90em;
@@ -85,13 +89,13 @@
 <header class="columns">
     <h1 class="title column col-3 col-md-12">
         <a href="/">
-            <img src="https://raw.githubusercontent.com/brutdethe/boutique-data/main/logo.svg" alt="logo boutique" class="logo">
+            <img src="{data.setup.logo}" alt="logo boutique" class="logo">
         </a>
     </h1>
     <nav class="column col-7 col-md-9 col-sm-12">
         <ul>
             <li><a href="/">boutique</a></li>
-            <li><a>à propos</a></li>
+            <li><a href="{data.setup.a_propos}">à propos</a></li>
             <li>
                 <a href="/fr/panier">
                     <span class="badge" data-badge="0" data-initial="YZ">panier</span>
