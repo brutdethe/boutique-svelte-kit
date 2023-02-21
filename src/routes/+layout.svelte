@@ -11,7 +11,16 @@
         font-weight: 300;
         padding: 0 2em;
     }
-    
+    section {
+        position: relative;
+        max-width: 56em;
+        background-color: white;
+        padding: 2em;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+
+
     footer {
         border-top: 1px solid rgba(255, 62, 0, 0.1);
         padding: 1.8rem 0.75rem 1rem;
@@ -69,6 +78,12 @@
         padding: 1em 0.5em;
         display: block;
     }
+
+    @media (min-width: 1400px) {
+        section {
+            max-width: 90em;
+        }
+    }
     
     @media (max-width: 840px) {
         .title {
@@ -78,12 +93,19 @@
             justify-content: flex-start;
         }
     }
+
+    @media (max-width: 768px) {
+        section {
+            padding: 2em 1em;
+        }
+    }
     
     @media (max-width: 600px) {
         ul {
             justify-content: center;
         }
     }
+
 </style>
 
 <header class="columns">
@@ -117,7 +139,9 @@
     </div>
 </header>
 
-<slot></slot>
+<section>
+    <slot></slot>
+</section>
 
 <footer class="section section-footer">
     <ul class="container grid-lg">
