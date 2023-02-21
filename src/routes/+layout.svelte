@@ -119,7 +119,7 @@
             <li><a href="/">boutique</a></li>
             <li><a href="{data.setup.a_propos}">à propos</a></li>
             <li>
-                <a href="/fr/panier">
+                <a href="/panier">
                     <span class="badge" data-badge="0" data-initial="YZ">panier</span>
                 </a>
             </li>
@@ -145,7 +145,7 @@
 
 <footer class="section section-footer">
     <ul class="container grid-lg">
-        <li><a href="/fr/confidentialite">confidentialité</a></li>
-        <li><a href="/fr/mentions-legales">mentions légales</a></li>
+        <li><a href="/confidentialite">confidentialité</a></li>
+        <li><a href="/mentions-legales">mentions légales</a></li>
     </ul>
 </footer>
