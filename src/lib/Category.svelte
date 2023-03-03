@@ -1,5 +1,5 @@
 <script>
-    export let category
+    export let categorySelected
 </script>
 
-<h4>{category}</h4>
+<h4>{categorySelected}</h4>

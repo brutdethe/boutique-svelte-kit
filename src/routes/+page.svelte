@@ -1,5 +1,8 @@
 <script>
-  import ProductsList from "$lib/ProductsList.svelte" 
+  import ProductsList from '$lib/ProductsList.svelte' 
+
+  const categorySelected = "Carte postale"
+
 </script>
 
 <style>
@@ -26,6 +29,5 @@
 </style>
 
 <section>
-    <h1>Boutique</h1>
-    <ProductsList />
+    <ProductsList {categorySelected} />
 </section>
