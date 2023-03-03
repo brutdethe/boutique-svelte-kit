@@ -4,50 +4,7 @@
     import Buy from '$lib/Buy.svelte'
 
     export let categorySelected
-
-    const products = [
-        {
-            'id': 'CP01',
-            'titre': 'carte postale',
-            'type': 'N&B',
-            'description': 'image d\'épinal',
-            'photos': [
-                'Carte10x15cieux_1-a.jpg'
-            ],
-            'prix': '12'    
-        },
-        {
-            'id': 'CP03',
-            'titre': 'carte postale',
-            'type': 'N&B',
-            'description': 'image d\'épinal',
-            'photos': [
-                'Carte10x15cieux_1-a.jpg'
-            ],
-            'prix': '12'    
-        },
-               {
-            'id': 'CP02',
-            'titre': 'carte postale',
-            'type': 'N&B',
-            'description': 'image d\'épinal',
-            'photos': [
-                'Carte10x15cieux_1-a.jpg'
-            ],
-            'prix': '12'    
-        },
-               {
-            'id': 'CP04',
-            'titre': 'carte postale',
-            'type': 'N&B',
-            'description': 'image d\'épinal',
-            'photos': [
-                'Carte10x15cieux_1-a.jpg'
-            ],
-            'prix': '12'    
-        }                                                                                                                                          
-    ]
-    
+    export let products
 </script>
 
 <style>
@@ -89,18 +46,18 @@
 				<div class="column col-4 col-xs-12">
 					<article class="card">
 						<div class="card-header">
-							<div class="card-title h5">{product.titre}</div>
+							<div class="card-title h5">{product.titre.fr}</div>
 							<div class="card-subtitle text-gray">{categorySelected} {product.type || ''}</div>
 						</div>
 						<div class="card-image">
 							<a href="/">
 								<Photo
-									alt={`${product.titre} #${product.id}`}
+									alt={`${product.titre.fr} #${product.id}`}
 									url={`thumbs/${product.photos[0]}`} />
 							</a>
 						</div>
 						<div class="card-body">
-							<p class="description">{product.description}</p>
+							<p class="description">{product.description.fr}</p>
 							<h3 class="price">
 								{product.prix} €
 							</h3>
