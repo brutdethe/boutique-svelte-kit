@@ -1,3 +1,7 @@
+<script>
+  export let data  
+</script>
+
 <style>
     header {
         max-width: 90em;
@@ -7,7 +11,16 @@
         font-weight: 300;
         padding: 0 2em;
     }
-    
+    section {
+        position: relative;
+        max-width: 56em;
+        background-color: white;
+        padding: 2em;
+        margin: 0 auto;
+        box-sizing: border-box;
+    }
+
+
     footer {
         border-top: 1px solid rgba(255, 62, 0, 0.1);
         padding: 1.8rem 0.75rem 1rem;
@@ -65,6 +78,12 @@
         padding: 1em 0.5em;
         display: block;
     }
+
+    @media (min-width: 1400px) {
+        section {
+            max-width: 90em;
+        }
+    }
     
     @media (max-width: 840px) {
         .title {
@@ -74,26 +93,33 @@
             justify-content: flex-start;
         }
     }
+
+    @media (max-width: 768px) {
+        section {
+            padding: 2em 1em;
+        }
+    }
     
     @media (max-width: 600px) {
         ul {
             justify-content: center;
         }
     }
+
 </style>
 
 <header class="columns">
     <h1 class="title column col-3 col-md-12">
         <a href="/">
-            <img src="https://raw.githubusercontent.com/brutdethe/boutique-data/main/logo.svg" alt="logo boutique" class="logo">
+            <img src="{data.setup.logo}" alt="logo boutique" class="logo">
         </a>
     </h1>
     <nav class="column col-7 col-md-9 col-sm-12">
         <ul>
             <li><a href="/">boutique</a></li>
-            <li><a>à propos</a></li>
+            <li><a href="{data.setup.a_propos}">à propos</a></li>
             <li>
-                <a href="/fr/panier">
+                <a href="/panier">
                     <span class="badge" data-badge="0" data-initial="YZ">panier</span>
                 </a>
             </li>
@@ -113,11 +139,13 @@
     </div>
 </header>
 
-<slot></slot>
+<section>
+    <slot></slot>
+</section>
 
 <footer class="section section-footer">
     <ul class="container grid-lg">
-        <li><a href="/fr/confidentialite">confidentialité</a></li>
-        <li><a href="/fr/mentions-legales">mentions légales</a></li>
+        <li><a href="/confidentialite">confidentialité</a></li>
+        <li><a href="/mentions-legales">mentions légales</a></li>
     </ul>
 </footer>
