@@ -1,3 +1,7 @@
+<script>
+  import ProductsList from "$lib/ProductsList.svelte" 
+</script>
+
 <style>
   section {
     position: relative;
@@ -23,4 +27,5 @@
 
 <section>
     <h1>Boutique</h1>
+    <ProductsList />
 </section>
