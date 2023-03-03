@@ -1,16 +1,16 @@
 import {
-    PUBLIC_github_data_repo
-} from '$env/static/public'
+    get
+} from 'svelte/store'
+import {
+    setup
+} from '$lib/stores.js'
 
 /** @type {import('../../.svelte-kit/types/src/routes/$types').PageLoad} */
-export async function load({
-    fetch,
-    params
-}) {
-    const res = await fetch(`https://raw.githubusercontent.com/${PUBLIC_github_data_repo}/main/setup.json`)
-    const setup = await res.json()
+export async function load() {
+
+    const data = await get(setup)()
 
     return {
-        setup
+        data
     }
 }
