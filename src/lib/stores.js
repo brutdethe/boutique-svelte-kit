@@ -5,16 +5,16 @@ import {
     PUBLIC_github_data_repo
 } from '$env/static/public'
 
-export const setup = writable(async() => {
-    const res = await fetch(`https://raw.githubusercontent.com/${PUBLIC_github_data_repo}/main/setup.json`)
-    const setup = await res.json()
+const githubRepoName = PUBLIC_github_data_repo
 
-    return setup
-})
+const getGithubUrl = (repo, file) =>
+    `https://raw.githubusercontent.com/${repo}/main/${file}`
 
-export const products = writable(async() => {
-    const res = await fetch(`https://raw.githubusercontent.com/${PUBLIC_github_data_repo}/main/produits.json`)
-    const products = await res.json()
+async function loadData(repo, file) {
+    const res = await fetch(getGithubUrl(repo, file))
+    return await res.json()
+}
 
-    return products
-})
+export const setup = writable(async() => loadData(githubRepoName, 'setup.json'))
+export const categories = writable(async() => loadData(githubRepoName, 'categories.json'))
+export const products = writable(async() => loadData(githubRepoName, 'produits.json'))
