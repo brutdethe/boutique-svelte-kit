@@ -4,8 +4,7 @@ import {
 
 /** @type {import('../../.svelte-kit/types/src/routes/$types').PageLoad} */
 export async function load({
-    fetch,
-    params
+    fetch
 }) {
     const res = await fetch(`https://raw.githubusercontent.com/${PUBLIC_github_data_repo}/main/setup.json`)
     const setup = await res.json()
