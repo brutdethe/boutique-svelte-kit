@@ -1,10 +1,11 @@
 <script>
-    import Category from '$lib/Category.svelte'
+    import Category from '$lib/Categories.svelte'
     import Photo from '$lib/Photo.svelte'
     import Buy from '$lib/Buy.svelte'
 
-    export let categorySelected
-    export let products
+	export let categorySelected
+	export let categories
+	export let products
 </script>
 
 <style>
@@ -38,7 +39,7 @@
 </style>
 
 <header>
-	<Category {categorySelected} />
+	<Category {categorySelected} {categories} />
 </header>
 <section>
 	<div class="columns">

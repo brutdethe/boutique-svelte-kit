@@ -8,9 +8,11 @@ import {
 
 /** @type {import('../../.svelte-kit/types/src/routes/$types').PageLoad} */
 export async function load() {
-    const data = await get(products)()
-    console.log("categories", await get(categories)())
+    const productsJson = await get(products)()
+    const categoriesJson = await get(categories)()
+
     return {
-        data
+        products: productsJson,
+        categories: categoriesJson
     }
 }

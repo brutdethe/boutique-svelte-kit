@@ -12,6 +12,7 @@ const getGithubUrl = (repo, file) =>
 
 async function loadData(repo, file) {
     const res = await fetch(getGithubUrl(repo, file))
+
     return await res.json()
 }
 
