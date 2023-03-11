@@ -1,13 +1,13 @@
 <script>
-    export let categorySelected
     export let categories
+
+	const categorySelected=0
 
     function changeCategory(evt) {
 		console.log("clic")
 	    return
 	}
 
-	const categoriesArray = Object.keys(categories)
 </script>
 
 <style>
@@ -32,28 +32,25 @@
 	}
 </style>
 
-{#if categories}
+{#if categories && categories[categorySelected]}
 	<div class="hero-sm bg-primary">
 		<div class="hero-body">
-			{#if categories[categorySelected]}
-				<h3>{categories[categorySelected].titre.fr}</h3>
-				<p>{categories[categorySelected].description.fr}</p>
-			{/if}
+			<h3>{categories[categorySelected].titre.fr}</h3>
+			<p>{categories[categorySelected].description.fr}</p>
 		</div>
 	</div>
 
-	{#if categoriesArray.length > 1}
+	{#if categories.length > 1}
 		<div class="btn-list">
-			{#each categoriesArray as category}
-				<button
-					class="btn btn-sm {category === categorySelected ? 'btn-primary' : ''}"
-					on:click={changeCategory}
-					value={category}>	
-
-					{#if categories[category]}
-                        {categories[category].titre.fr}
-                    {/if}
-				</button>
+			{#each categories as category, index}
+				{#if category.titre}
+					<button
+						class="btn btn-sm {category.titre.fr === categories[categorySelected].titre.fr ? 'btn-primary' : ''}"
+						on:click={changeCategory}
+						value={category}>
+							{category.titre.fr}
+					</button>
+				{/if}
 			{/each}
 		</div>
 	{/if}
