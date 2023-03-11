@@ -16,6 +16,8 @@ async function loadData(repo, file) {
     return await res.json()
 }
 
+export const categorySelected = writable(0)
+
 export const setup = writable(async() => loadData(githubRepoName, 'setup.json'))
 export const categories = writable(async() => loadData(githubRepoName, 'categories.json'))
 export const products = writable(async() => loadData(githubRepoName, 'produits.json'))

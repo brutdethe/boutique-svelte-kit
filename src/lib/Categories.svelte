@@ -1,11 +1,10 @@
 <script>
-    export let categories
-
-	let categorySelected=0
-
+	import { categorySelected } from './stores.js'
+	export let categories
+	
     function changeCategory(evt) {
-		categorySelected = evt.target.getAttribute('data-id')
-		
+		$categorySelected = evt.target.getAttribute('data-id')
+
 		return
 	}
 
@@ -33,11 +32,11 @@
 	}
 </style>
 
-{#if categories && categories[categorySelected]}
+{#if categories && categories[$categorySelected]}
 	<div class="hero-sm bg-primary">
 		<div class="hero-body">
-			<h3>{categories[categorySelected].titre.fr}</h3>
-			<p>{categories[categorySelected].description.fr}</p>
+			<h3>{categories[$categorySelected].titre.fr}</h3>
+			<p>{categories[$categorySelected].description.fr}</p>
 		</div>
 	</div>
 
@@ -46,7 +45,7 @@
 			{#each categories as category, index}
 				{#if category.titre}
 					<button
-						class="btn btn-sm {category.titre.fr === categories[categorySelected].titre.fr ? 'btn-primary' : ''}"
+						class="btn btn-sm {category.titre.fr === categories[$categorySelected].titre.fr ? 'btn-primary' : ''}"
 						on:click={changeCategory}
 						data-id={index}
 						value={category}>
