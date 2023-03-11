@@ -1,11 +1,12 @@
 <script>
     export let categories
 
-	const categorySelected=0
+	let categorySelected=0
 
     function changeCategory(evt) {
-		console.log("clic")
-	    return
+		categorySelected = evt.target.getAttribute('data-id')
+		
+		return
 	}
 
 </script>
@@ -47,6 +48,7 @@
 					<button
 						class="btn btn-sm {category.titre.fr === categories[categorySelected].titre.fr ? 'btn-primary' : ''}"
 						on:click={changeCategory}
+						data-id={index}
 						value={category}>
 							{category.titre.fr}
 					</button>
