@@ -14,12 +14,13 @@ export async function load({
 }) {
     const productId = params.slug.split("_")[1]
     const productz = await get(products)()
-    const product = productz.filter(item => item.id === productId)[0]
+    const product = productz.filter(item => item.id === productId)
 
-    return {
-        product: product
+    if (!product.length) {
+        throw error(404, 'Not found')
     }
 
-
-    // throw error(404, 'Not found');
+    return {
+        product: product[0]
+    }
 }
