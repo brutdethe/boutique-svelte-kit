@@ -1,7 +1,5 @@
 <script>
   import ProductsList from '$lib/ProductsList.svelte' 
-
-  const categorySelected = "Carte Postale"
   
   export let data
 
@@ -34,5 +32,5 @@
 </style>
 
 <section>
-    <ProductsList {categorySelected} {products} {categories} />
+    <ProductsList {products} {categories} />
 </section>
