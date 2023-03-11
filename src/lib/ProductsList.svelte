@@ -1,10 +1,17 @@
 <script>
-    import Category from '$lib/Category.svelte'
+	import { categorySelected } from './stores.js'
+    import Category from '$lib/Categories.svelte'
     import Photo from '$lib/Photo.svelte'
     import Buy from '$lib/Buy.svelte'
 
-    export let categorySelected
-    export let products
+	export let categories
+	export let products
+
+	function getProductsByCategory(products, category) {
+		return products
+			.filter(item => item.catégorie === category)
+			.sort((a, b) => new Date(b.création) - new Date(a.création))
+	}
 </script>
 
 <style>
@@ -38,42 +45,42 @@
 </style>
 
 <header>
-	<Category {categorySelected} />
+	<Category {categories} />
 </header>
 <section>
 	<div class="columns">
-			{#each products as product}
-				<div class="column col-4 col-xs-12">
-					<article class="card">
-						<div class="card-header">
-							<div class="card-title h5">{product.titre.fr}</div>
-							<div class="card-subtitle text-gray">{categorySelected} {product.type || ''}</div>
+		{#each getProductsByCategory(products, categories[$categorySelected].titre.fr) as product}
+			<div class="column col-4 col-xs-12">
+				<article class="card">
+					<div class="card-header">
+						<div class="card-title h5">{product.titre.fr}</div>
+						<div class="card-subtitle text-gray">{categorySelected} {product.type || ''}</div>
+					</div>
+					<div class="card-image">
+						<a href="/">
+							<Photo
+								alt={`${product.titre.fr} #${product.id}`}
+								url={`thumbs/${product.photos[0]}`} />
+						</a>
+					</div>
+					<div class="card-body">
+						<p class="description">{product.description.fr}</p>
+						<h3 class="price">
+							{product.prix} €
+						</h3>
+					</div>
+					<div class="card-footer">
+						<div class="btn-group btn-group-block">
+							<button
+								class="detail btn btn-secondary"
+								data-product={product.id}>
+								détail
+							</button>
+							<Buy />
 						</div>
-						<div class="card-image">
-							<a href="/">
-								<Photo
-									alt={`${product.titre.fr} #${product.id}`}
-									url={`thumbs/${product.photos[0]}`} />
-							</a>
-						</div>
-						<div class="card-body">
-							<p class="description">{product.description.fr}</p>
-							<h3 class="price">
-								{product.prix} €
-							</h3>
-						</div>
-						<div class="card-footer">
-							<div class="btn-group btn-group-block">
-								<button
-									class="detail btn btn-secondary"
-									data-product={product.id}>
-									détail
-								</button>
-								<Buy />
-							</div>
-						</div>
-					</article>
-				</div>
-			{/each}
+					</div>
+				</article>
+			</div>
+		{/each}
 	</div>
 </section>
