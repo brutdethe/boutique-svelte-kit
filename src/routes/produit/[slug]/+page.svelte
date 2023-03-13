@@ -1,7 +1,7 @@
 <script>
-    export let data
+    import Product from '$lib/Product.svelte' 
 
-    console.log(data.product)
+    export let data
 </script>
 
-<h1>Produit</h1>
+<Product product={data.product} />
