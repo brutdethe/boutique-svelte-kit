@@ -1,4 +1,5 @@
 <script>
+    import { goto } from '$app/navigation'
 	import { categorySelected } from './stores.js'
     import Category from '$lib/Categories.svelte'
     import Photo from '$lib/Photo.svelte'
@@ -12,6 +13,8 @@
 			.filter(item => item.catégorie === category)
 			.sort((a, b) => new Date(b.création) - new Date(a.création))
 	}
+
+	const slugify = (text) => text.toLowerCase().replace(" ", "-")
 </script>
 
 <style>
@@ -73,6 +76,7 @@
 						<div class="btn-group btn-group-block">
 							<button
 								class="detail btn btn-secondary"
+								on:click|once={goto(`/produit/${slugify(categories[$categorySelected].titre.fr)}_${product.id}`)}
 								data-product={product.id}>
 								détail
 							</button>
