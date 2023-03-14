@@ -11,6 +11,8 @@ const getGhUrl = (repo, file) =>
     `https://raw.githubusercontent.com/${repo}/main/${file}`
 
 let storedCurrency = 'EUR'
+let storedCountry = 'france'
+let storedBasket = []
 
 async function loadData(repo, file) {
     const res = await fetch(getGhUrl(repo, file))
@@ -20,6 +22,10 @@ async function loadData(repo, file) {
 
 export const categorySelected = writable(0)
 export const currency = writable(storedCurrency)
+export const country = writable(storedCountry)
+export const basket = writable(storedBasket)
+export const rate = writable(1.28)
+
 export const getGithubUrl = writable((file) => getGhUrl(githubRepoName, file))
 
 export const setup = writable(async() => loadData(githubRepoName, 'setup.json'))
