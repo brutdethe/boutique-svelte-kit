@@ -48,30 +48,26 @@
 				{ limit: 15, price: { EUR: 173, USD: Math.ceil(169 * $rate) } },
 				{ limit: 20, price: { EUR: 226, USD: Math.ceil(206 * $rate) } }
 			]
-		};
-		const weightTotal = basket.reduce((acc, product) => product.poids * product.qty + acc, 0) || 0;
+		}
 
-		return collisimo[country].filter(rate => weightTotal <= rate.limit)[0].price;
-		transport;
+		// TODO shipping
+		return 12
+
+		const weightTotal = basket.reduce((acc, product) => product.poids * product.qty + acc, 0) || 0
+
+		return collisimo[country].filter(rate => weightTotal <= rate.limit)[0].price
 	}
 
 	function calculateSubTotal(basket, currency) {
-		return basket.reduce((acc, product) => product.prix[currency] * product.qty + acc, 0);
+		return basket.reduce((acc, product) => product.prix * product.qty + acc, 0)
 	}
 
-	$: subTotal = {
-		EUR: calculateSubTotal($basket, 'EUR'),
-		USD: calculateSubTotal($basket, 'USD')
-	};
-
-	$: transport = shippingCost($basket, $country);
-	$: total = {
-		EUR: +transport['EUR'] + +subTotal['EUR'],
-		USD: +transport['USD'] + +subTotal['USD']
-	};
+	$: subTotal = calculateSubTotal($basket, 'EUR')
+	$: shipping = shippingCost($basket, $country)
+	$: total = +shipping + +subTotal
 
 	function deleteClick(id) {
-		$basket = $basket.filter(product => product.id !== id);
+		$basket = $basket.filter(product => product.id !== id)
 	}
 
 	const dict = {
@@ -191,7 +187,7 @@
 							<tr>
 								<td>Transport</td>
 								<td class="text-right">
-									<Price price={transport} />
+									<Price price={shipping} />
 								</td>
 							</tr>
 							<tr class="active">

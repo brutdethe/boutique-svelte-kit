@@ -1,6 +1,6 @@
 <script>
     import { goto } from '$app/navigation'
-	import { categorySelected } from './stores.js'
+	import { categorySelected } from '$lib/stores.js'
     import Category from '$lib/Categories.svelte'
     import Photo from '$lib/Photo.svelte'
     import Buy from '$lib/Buy.svelte'
@@ -80,7 +80,7 @@
 								data-product={product.id}>
 								détail
 							</button>
-							<Buy />
+							<Buy item={product} />
 						</div>
 					</div>
 				</article>
