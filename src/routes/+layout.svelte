@@ -1,5 +1,9 @@
 <script>
+  import { basket } from '$lib/stores.js'
+  
   export let data  
+
+  const basketCount = basket => basket.reduce((acc, product) => product.qty + acc, 0)
 </script>
 
 <style>
@@ -120,7 +124,7 @@
             <li><a href="{data.setup.a_propos}">à propos</a></li>
             <li>
                 <a href="/panier">
-                    <span class="badge" data-badge="0" data-initial="YZ">panier</span>
+                    <span class="badge" data-badge="{basketCount($basket)}" data-initial="YZ">panier</span>
                 </a>
             </li>
         </ul>
