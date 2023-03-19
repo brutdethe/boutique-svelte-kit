@@ -1,4 +1,5 @@
 <script>
+  import Currencies from '$lib/Currencies.svelte' 
   import { basket } from '$lib/stores.js'
   
   export let data  
@@ -131,11 +132,7 @@
     </nav>
 
     <div class="i18n columns col-gapless column col-2 col-md-3 col-sm-12">
-        <div class="currency column col-6">
-            <button class="btn btn-sm bg-secondary" value="EUR">€
-            </button>
-            <button class="btn btn-sm " value="USD">$</button>
-        </div>
+        <Currencies />
         <div class="language column col-6">
             <button class="btn btn-sm bg-secondary" value="fr">FR</button>
             <button class="btn btn-sm " value="en">EN</button>

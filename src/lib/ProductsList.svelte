@@ -3,7 +3,8 @@
 	import { categorySelected } from '$lib/stores.js'
     import Category from '$lib/Categories.svelte'
     import Photo from '$lib/Photo.svelte'
-    import Buy from '$lib/Buy.svelte'
+	import Buy from '$lib/Buy.svelte'
+	import Price from '$lib/Price.svelte'
 
 	export let categories
 	export let products
@@ -69,7 +70,7 @@
 					<div class="card-body">
 						<p class="description">{product.description.fr}</p>
 						<h3 class="price">
-							{product.prix} €
+						    <Price price={product.prix} />
 						</h3>
 					</div>
 					<div class="card-footer">
