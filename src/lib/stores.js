@@ -24,7 +24,7 @@ export const categorySelected = writable(0)
 export const currency = writable(storedCurrency)
 export const country = writable(storedCountry)
 export const basket = writable(storedBasket)
-export const rate = writable(1.28)
+export const rate = writable(1.1)
 
 export const getGithubUrl = writable((file) => getGhUrl(githubRepoName, file))
 
