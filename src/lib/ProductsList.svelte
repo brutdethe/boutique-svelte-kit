@@ -9,6 +9,11 @@
 	export let categories
 	export let products
 
+	// Old version: categories.json
+	if (!Array.isArray(categories)) {
+		categories =  Object.values(categories)
+	}
+
 	function getProductsByCategory(products, category) {
 		return products
 			.filter(item => item.catégorie === category)
