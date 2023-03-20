@@ -9,6 +9,11 @@
 	export let categories
 	export let products
 
+	// Old version: categories.json
+	if (!Array.isArray(categories)) {
+		categories =  Object.values(categories)
+	}
+
 	function getProductsByCategory(products, category) {
 		return products
 			.filter(item => item.catégorie === category)
@@ -53,7 +58,7 @@
 </header>
 <section>
 	<div class="columns">
-		{#each getProductsByCategory(products, categories[$categorySelected].titre.fr) as product}
+		{#each getProductsByCategory(products, categories[$categorySelected].label) as product}
 			<div class="column col-4 col-xs-12">
 				<article class="card">
 					<div class="card-header">
