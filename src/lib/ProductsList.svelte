@@ -58,7 +58,7 @@
 </header>
 <section>
 	<div class="columns">
-		{#each getProductsByCategory(products, categories[$categorySelected].titre.fr) as product}
+		{#each getProductsByCategory(products, categories[$categorySelected].label) as product}
 			<div class="column col-4 col-xs-12">
 				<article class="card">
 					<div class="card-header">
