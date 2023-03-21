@@ -10,7 +10,7 @@ const githubRepoName = PUBLIC_github_data_repo
 const getGhUrl = (repo, file) =>
     `https://raw.githubusercontent.com/${repo}/main/${file}`
 
-let storedLang = 'fr'
+let storedLanguage = 'fr'
 let storedCurrency = 'EUR'
 let storedCountry = 'france'
 let storedBasket = []
@@ -21,7 +21,7 @@ async function loadData(repo, file) {
     return await res.json()
 }
 
-export const lang = writable(storedLang)
+export const language = writable(storedLanguage)
 export const categorySelected = writable(0)
 export const currency = writable(storedCurrency)
 export const country = writable(storedCountry)

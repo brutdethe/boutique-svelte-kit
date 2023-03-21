@@ -1,6 +1,7 @@
 <script>
   import Currencies from '$lib/Currencies.svelte' 
-  import { lang, basket } from '$lib/stores.js'
+  import Languages from '$lib/Languages.svelte' 
+  import { language, basket } from '$lib/stores.js'
   
   export let data  
 
@@ -124,7 +125,7 @@
             <li><a href="/">boutique</a></li>
             <li><a href="{data.setup.a_propos}">à propos</a></li>
             <li>
-                <a href="/{$lang}/panier">
+                <a href="/{$language}/panier">
                     <span class="badge" data-badge="{basketCount($basket)}" data-initial="YZ">panier</span>
                 </a>
             </li>
@@ -133,10 +134,7 @@
 
     <div class="i18n columns col-gapless column col-2 col-md-3 col-sm-12">
         <Currencies />
-        <div class="language column col-6">
-            <button class="btn btn-sm bg-secondary" value="fr">FR</button>
-            <button class="btn btn-sm " value="en">EN</button>
-        </div>
+        <Languages />
     </div>
 </header>
 
@@ -146,7 +144,7 @@
 
 <footer class="section section-footer">
     <ul class="container grid-lg">
-        <li><a href="/{$lang}/confidentialite">confidentialité</a></li>
-        <li><a href="/{$lang}/mentions-legales">mentions légales</a></li>
+        <li><a href="/{$language}/confidentialite">confidentialité</a></li>
+        <li><a href="/{$language}/mentions-legales">mentions légales</a></li>
     </ul>
 </footer>
