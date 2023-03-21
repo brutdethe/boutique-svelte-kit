@@ -1,4 +1,5 @@
 <script>
+	import { language } from '$lib/stores.js'
     import Buy from '$lib/Buy.svelte'
     import Photo from '$lib/Photo.svelte'
     import Price from '$lib/Price.svelte'
@@ -6,7 +7,7 @@
     export let product
 
 	function getWeight(weight, lang) {
-		if ('fr' === 'en') {
+		if (lang === 'en') {
 			return `${(weight * 35.274).toFixed(2)}oz`;
 		} else {
 			return `${weight * 1000}g`;
@@ -121,7 +122,7 @@
                                     <i class="icon icon-arrow-right" />
                                 </label>
                                 <Photo
-                                    alt={`${product.titre.fr} #${product.id}`}
+                                    alt={`${product.titre[$language]} #${product.id}`}
                                     lang='fr'
                                     url={`carousels/${photo}`} />
 
@@ -138,10 +139,10 @@
         </div>
         <div class="card column col-4 col-xs-12">
             <div class="card-header">
-                <div class="card-title h4">{product.titre.fr}</div>
+                <div class="card-title h4">{product.titre[$language]}</div>
             </div>
             <div class="card-body">
-                <p>{product.description.fr}</p>
+                <p>{product.description[$language]}</p>
                 <dl>
                     {#if 'cultivar' in product}
                         <dt>Cultivar :&nbsp;</dt>
@@ -157,7 +158,7 @@
                     {/if}
                     {#if 'altitude' in product}
                         <dt>Altitude :&nbsp;</dt>
-                        <dd>{getElevation(product.altitude, 'fr')}</dd>
+                        <dd>{getElevation(product.altitude, $language)}</dd>
                     {/if}
                     {#if 'millésime' in product}
                         <dt>Millésime :&nbsp;</dt>
@@ -165,25 +166,25 @@
                     {/if}
                     {#if 'capacité' in product}
                         <dt>Capacité :&nbsp;</dt>
-                        <dd>{getCapacity(product.capacité, 'fr')}</dd>
+                        <dd>{getCapacity(product.capacité, $language)}</dd>
                     {/if}
                     {#if 'poids' in product}
                         <dt>Poids :&nbsp;</dt>
-                        <dd>{getWeight(product.poids, 'fr')}</dd>
+                        <dd>{getWeight(product.poids, $language)}</dd>
                     {/if}
                     {#if 'dimension' in product}
                         <dt>Dimension :&nbsp;</dt>
-                        <dd>{getSize(product.dimension, 'fr')}</dd>
+                        <dd>{getSize(product.dimension, $language)}</dd>
                     {/if}
                     <dt>Stock :&nbsp;</dt>
-                    <dd>{getStock(1, 'fr')}</dd>
+                    <dd>{getStock(1, $language)}</dd>
                 </dl>
             </div>
             <div class="card-footer">
                 <h3 class="card-title h1 price">
                     <Price price={product.prix} />
                 </h3>
-                <Buy item={product} lang={'fr'} />
+                <Buy item={product} />
             </div>
         </div>
     </div>
