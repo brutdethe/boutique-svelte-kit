@@ -19,8 +19,6 @@
 			.filter(item => item.catégorie === category)
 			.sort((a, b) => new Date(b.création) - new Date(a.création))
 	}
-
-	const slugify = (text) => text.toLowerCase().replace(" ", "-")
 </script>
 
 <style>
@@ -63,7 +61,7 @@
 				<article class="card">
 					<div class="card-header">
 						<div class="card-title h5">{product.titre.fr}</div>
-						<div class="card-subtitle text-gray">{categorySelected} {product.type || ''}</div>
+						<div class="card-subtitle text-gray">{product.catégorie} {product.type || ''}</div>
 					</div>
 					<div class="card-image">
 						<a href="/">
@@ -82,7 +80,7 @@
 						<div class="btn-group btn-group-block">
 							<button
 								class="detail btn btn-secondary"
-								on:click|once={goto(`/${$lang}/produit/${slugify(categories[$categorySelected].titre.fr)}_${product.id}`)}
+								on:click|once={goto(`/${$lang}/produit/${product.catégorie}_${product.id}`)}
 								data-product={product.id}>
 								détail
 							</button>
