@@ -10,7 +10,7 @@
     const dict = {
         nav_shop: { en: 'shop', fr: 'boutique' },
         nav_about: { en: 'about', fr: 'à propos' },
-        nav_basket: { en: 'basket', fr: 'panier' },
+        nav_basket: { en: 'cart', fr: 'panier' },
 		nav_legal: { en: 'publisher', fr: 'mentions légales' },
 		nav_privacy: { en: 'privacy', fr: 'confidentialité' }
     }

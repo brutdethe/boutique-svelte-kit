@@ -93,11 +93,15 @@
 			en: 'total',
 			fr: 'total'
 		},
+		shipping: {
+			en: 'shipping',
+			fr: 'transport'
+		},
 		order: {
 			en: 'Placing the order',
 			fr: 'Passez la commande'
 		}
-	};
+	}
 </script>
 
 <style>
@@ -183,7 +187,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td>Transport</td>
+								<td>{dict.shipping[$language]}</td>
 								<td class="text-right">
 									<Price price={shipping} />
 								</td>
