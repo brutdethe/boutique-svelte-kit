@@ -19,6 +19,17 @@
 			.filter(item => item.catégorie === category)
 			.sort((a, b) => new Date(b.création) - new Date(a.création))
 	}
+
+	const dict = {
+		title: {
+			en: "product's list",
+			fr: 'liste des produits'
+		},
+		detail: {
+			en: 'detail',
+			fr: 'détail'
+		}
+	}
 </script>
 
 <style>
@@ -51,6 +62,10 @@
 	}
 </style>
 
+<svelte:head>
+	<title>{dict.title[$language]}</title>
+</svelte:head>
+
 <header>
 	<Category {categories} />
 </header>
@@ -60,18 +75,18 @@
 			<div class="column col-4 col-xs-12">
 				<article class="card">
 					<div class="card-header">
-						<div class="card-title h5">{product.titre.fr}</div>
+						<div class="card-title h5">{product.titre[$language]}</div>
 						<div class="card-subtitle text-gray">{product.catégorie} {product.type || ''}</div>
 					</div>
 					<div class="card-image">
 						<a href="/">
 							<Photo
-								alt={`${product.titre.fr} #${product.id}`}
+								alt={`${product.titre[$language]} #${product.id}`}
 								url={`thumbs/${product.photos[0]}`} />
 						</a>
 					</div>
 					<div class="card-body">
-						<p class="description">{product.description.fr}</p>
+						<p class="description">{product.description[$language]}</p>
 						<h3 class="price">
 						    <Price price={product.prix} />
 						</h3>
@@ -82,7 +97,7 @@
 								class="detail btn btn-secondary"
 								on:click|once={goto(`/${$language}/produit/${product.catégorie}_${product.id}`)}
 								data-product={product.id}>
-								détail
+								{dict.detail[$language]}
 							</button>
 							<Buy item={product} />
 						</div>
