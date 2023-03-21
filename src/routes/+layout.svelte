@@ -1,11 +1,19 @@
 <script>
-  import Currencies from '$lib/Currencies.svelte' 
-  import Languages from '$lib/Languages.svelte' 
-  import { language, basket } from '$lib/stores.js'
-  
-  export let data  
+    import Currencies from '$lib/Currencies.svelte' 
+    import Languages from '$lib/Languages.svelte' 
+    import { language, basket } from '$lib/stores.js'
+    
+    export let data  
 
-  const basketCount = basket => basket.reduce((acc, product) => product.qty + acc, 0)
+    const basketCount = basket => basket.reduce((acc, product) => product.qty + acc, 0)
+
+    const dict = {
+        nav_shop: { en: 'shop', fr: 'boutique' },
+        nav_about: { en: 'about', fr: 'à propos' },
+        nav_basket: { en: 'basket', fr: 'panier' },
+		nav_legal: { en: 'publisher', fr: 'mentions légales' },
+		nav_privacy: { en: 'privacy', fr: 'confidentialité' }
+    }
 </script>
 
 <style>
@@ -122,11 +130,11 @@
     </h1>
     <nav class="column col-7 col-md-9 col-sm-12">
         <ul>
-            <li><a href="/">boutique</a></li>
-            <li><a href="{data.setup.a_propos}">à propos</a></li>
+            <li><a href="/">{dict.nav_shop[$language]}</a></li>
+            <li><a href="{data.setup.a_propos}">{dict.nav_about[$language]}</a></li>
             <li>
                 <a href="/{$language}/panier">
-                    <span class="badge" data-badge="{basketCount($basket)}" data-initial="YZ">panier</span>
+                    <span class="badge" data-badge="{basketCount($basket)}" data-initial="YZ">{dict.nav_basket[$language]}</span>
                 </a>
             </li>
         </ul>
@@ -144,7 +152,7 @@
 
 <footer class="section section-footer">
     <ul class="container grid-lg">
-        <li><a href="/{$language}/confidentialite">confidentialité</a></li>
-        <li><a href="/{$language}/mentions-legales">mentions légales</a></li>
+        <li><a href="/{$language}/confidentialite">{dict.nav_privacy[$language]}</a></li>
+        <li><a href="/{$language}/mentions-legales">{dict.nav_legal[$language]}</a></li>
     </ul>
 </footer>
