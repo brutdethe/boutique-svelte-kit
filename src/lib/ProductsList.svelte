@@ -1,6 +1,6 @@
 <script>
     import { goto } from '$app/navigation'
-	import { categorySelected } from '$lib/stores.js'
+	import { lang, categorySelected } from '$lib/stores.js'
     import Category from '$lib/Categories.svelte'
     import Photo from '$lib/Photo.svelte'
 	import Buy from '$lib/Buy.svelte'
@@ -82,7 +82,7 @@
 						<div class="btn-group btn-group-block">
 							<button
 								class="detail btn btn-secondary"
-								on:click|once={goto(`/produit/${slugify(categories[$categorySelected].titre.fr)}_${product.id}`)}
+								on:click|once={goto(`/${$lang}/produit/${slugify(categories[$categorySelected].titre.fr)}_${product.id}`)}
 								data-product={product.id}>
 								détail
 							</button>
