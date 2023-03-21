@@ -1,6 +1,6 @@
 <script>
   import Currencies from '$lib/Currencies.svelte' 
-  import { basket } from '$lib/stores.js'
+  import { lang, basket } from '$lib/stores.js'
   
   export let data  
 
@@ -124,7 +124,7 @@
             <li><a href="/">boutique</a></li>
             <li><a href="{data.setup.a_propos}">à propos</a></li>
             <li>
-                <a href="/panier">
+                <a href="/{$lang}/panier">
                     <span class="badge" data-badge="{basketCount($basket)}" data-initial="YZ">panier</span>
                 </a>
             </li>
@@ -146,7 +146,7 @@
 
 <footer class="section section-footer">
     <ul class="container grid-lg">
-        <li><a href="/confidentialite">confidentialité</a></li>
-        <li><a href="/mentions-legales">mentions légales</a></li>
+        <li><a href="/{$lang}/confidentialite">confidentialité</a></li>
+        <li><a href="/{$lang}/mentions-legales">mentions légales</a></li>
     </ul>
 </footer>
