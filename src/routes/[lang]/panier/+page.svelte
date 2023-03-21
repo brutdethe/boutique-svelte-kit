@@ -1,5 +1,5 @@
 <script>
-	import { lang, basket, currency, rate, country } from '$lib/stores.js'
+	import { language, basket, currency, rate, country } from '$lib/stores.js'
 	import Price from '$lib//Price.svelte'
 	import Countries from '$lib/Countries.svelte'
 
@@ -113,13 +113,13 @@
 </style>
 
 <svelte:head>
-	<title>{dict.title[$lang]}</title>
+	<title>{dict.title[$language]}</title>
 	<script src="https://js.stripe.com/v3/">
 
 	</script>
 </svelte:head>
 
-<h2>{dict.title[$lang]}</h2>
+<h2>{dict.title[$language]}</h2>
 
 <div class="container">
 	<div class="columns">
@@ -127,11 +127,11 @@
 			<table class="table table-striped table-hover column col-8">
 				<thead>
 					<tr>
-						<th>{dict.product[$lang]}</th>
+						<th>{dict.product[$language]}</th>
 						<th />
-						<th class="text-right">{dict.price[$lang]}</th>
-						<th class="text-center">{dict.qty[$lang]}</th>
-						<th class="text-right">{dict.total[$lang]}</th>
+						<th class="text-right">{dict.price[$language]}</th>
+						<th class="text-center">{dict.qty[$language]}</th>
+						<th class="text-right">{dict.total[$language]}</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -140,7 +140,7 @@
 						{#if item.stock > 0}
 							<tr class="active">
 								<td>
-									<a href="{`/${$lang}/produit/${item.catégorie}_${item.id}`}">
+									<a href="{`/${$language}/produit/${item.catégorie}_${item.id}`}">
 										{item.titre.fr} - {item.id}
 									</a>
 								</td>
@@ -200,7 +200,7 @@
 				</div>
 				<div class="card-footer">
 					<button id="checkout-button" class="btn btn-success" on:click|once={checkout}>
-						{dict.order[$lang]}
+						{dict.order[$language]}
 					</button>
 				</div>
 			</article>
@@ -209,14 +209,14 @@
 				<div class="empty-icon">
 					<i class="icon icon-stop" />
 				</div>
-				<p class="empty-title h5">{dict.empty[$lang]}</p>
+				<p class="empty-title h5">{dict.empty[$language]}</p>
 				<div class="empty-action">
-					<a href="/" class="back-shop">&lsaquo; {dict.backToShop[$lang]}</a>
+					<a href="/" class="back-shop">&lsaquo; {dict.backToShop[$language]}</a>
 				</div>
 			</div>
 		{/if}
 	</div>
 </div>
 {#if $basket.length}
-	<a href="/" class="back-shop">&lsaquo; {dict.backToShop[$lang]}</a>
+	<a href="/" class="back-shop">&lsaquo; {dict.backToShop[$language]}</a>
 {/if}
