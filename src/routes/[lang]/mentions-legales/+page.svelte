@@ -37,6 +37,10 @@
 	}
 </style>
 
+<svelte:head>
+	<title>{dict.title[$language]}</title>
+</svelte:head>
+
 <h1>{dict.title[$language]}</h1>
 
 <p>

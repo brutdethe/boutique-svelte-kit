@@ -63,7 +63,7 @@
 </style>
 
 <svelte:head>
-	<title>{dict.title[$language]}</title>
+	<title>{dict.title[$language]} - {categories[$categorySelected].titre[$language]}</title>
 </svelte:head>
 
 <header>
