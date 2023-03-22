@@ -20,9 +20,9 @@
 </script>
 
 <style>
-		p {
-				max-width: 960px;
-		}
+    p {
+            max-width: 960px;
+    }
 </style>
 
 <svelte:head>
