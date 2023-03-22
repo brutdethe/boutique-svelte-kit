@@ -11,8 +11,8 @@
         nav_shop: { en: 'shop', fr: 'boutique' },
         nav_about: { en: 'about', fr: 'à propos' },
         nav_basket: { en: 'cart', fr: 'panier' },
-		nav_legal: { en: 'publisher', fr: 'mentions légales' },
-		nav_privacy: { en: 'privacy', fr: 'confidentialité' }
+		nav_legal: { en: 'legal notice', fr: 'mentions légales' },
+		nav_privacy: { en: 'privacy policy', fr: 'confidentialité' }
     }
 </script>
 
@@ -152,7 +152,7 @@
 
 <footer class="section section-footer">
     <ul class="container grid-lg">
-        <li><a href="/{$language}/confidentialite">{dict.nav_privacy[$language]}</a></li>
-        <li><a href="/{$language}/mentions-legales">{dict.nav_legal[$language]}</a></li>
+        <li><a href="/{$language}/privacy-policy">{dict.nav_privacy[$language]}</a></li>
+        <li><a href="/{$language}/legal-notice">{dict.nav_legal[$language]}</a></li>
     </ul>
 </footer>

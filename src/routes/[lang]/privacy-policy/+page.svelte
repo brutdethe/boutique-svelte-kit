@@ -4,6 +4,10 @@
 		export let data
 
 		const dict = {
+				slug: {
+					en: 'privacy',
+					fr: 'confidentialité'
+				},
 				title: {
 					en: 'Privacy',
 					fr: 'Confidentialité'

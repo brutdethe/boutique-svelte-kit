@@ -4,6 +4,10 @@
 	export let data
 
   	const dict = {
+		slug: {
+			en: 'privacy',
+			fr: 'mention-légales'
+		},
 		title: {
 			en: 'Legal notice',
 			fr: 'Mention légales'
@@ -29,6 +33,8 @@
 			fr: `Cette boutique est créée par <a href="https://www.brutdethé.fr">brutdethé.fr</a> <br /> le produit est disponible en licence ouverte <a href="https://github.com/brutdethe/shop/blob/dev/LICENSE">CC0.1</a> - <a href="https://github.com/brutdethe/boutique-svelte-kit">Dépôt Github</a>.`
 		}
 	}
+
+
 </script>
 
 <style>
