@@ -1,22 +1,22 @@
 <script>
-		import { language } from '$lib/stores.js'
+    import { language } from '$lib/stores.js'
 
-		export let data
+    export let data
 
-		const dict = {
-				slug: {
-					en: 'privacy',
-					fr: 'confidentialité'
-				},
-				title: {
-					en: 'Privacy',
-					fr: 'Confidentialité'
-				},
-				site: {
-					en: `The site <a href="https://${data.setup.site}">${data.setup.site}</a> does not collect personal data.`,
-					fr: `Le site <a href="https://${data.setup.site}">${data.setup.site}</a> ne collecte pas de données personnelles.`
-				}
-		}
+    const dict = {
+            slug: {
+                en: 'privacy',
+                fr: 'confidentialité'
+            },
+            title: {
+                en: 'Privacy',
+                fr: 'Confidentialité'
+            },
+            site: {
+                en: `The site <a href="https://${data.setup.site}">${data.setup.site}</a> does not collect personal data.`,
+                fr: `Le site <a href="https://${data.setup.site}">${data.setup.site}</a> ne collecte pas de données personnelles.`
+            }
+    }
 </script>
 
 <style>
@@ -31,5 +31,5 @@
 
 <h1>{dict.title[$language]}</h1>
 <p>
-		{@html dict.site[$language]}
+	{@html dict.site[$language]}
 </p>
