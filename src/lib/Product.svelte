@@ -55,6 +55,13 @@
 		} else {
 			return `${elevation}m`;
 		}
+    }
+    
+    const dict = {
+		title: {
+			en: "product sheet",
+			fr: 'fiche produit'
+		}
 	}
 </script>
 
@@ -93,6 +100,10 @@
 		width: 5rem;
 	}
 </style>
+
+<svelte:head>
+	<title>{dict.title[$language]} - {product && product.titre[$language]}</title>
+</svelte:head>
 
 {#if product}
     <div class="columns">
