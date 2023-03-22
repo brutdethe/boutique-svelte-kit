@@ -11,8 +11,11 @@
         nav_shop: { en: 'shop', fr: 'boutique' },
         nav_about: { en: 'about', fr: 'à propos' },
         nav_basket: { en: 'cart', fr: 'panier' },
-		nav_legal: { en: 'legal notice', fr: 'mentions légales' },
-		nav_privacy: { en: 'privacy policy', fr: 'confidentialité' }
+        nav_basket_url: { en: 'cart', fr: 'panier' },
+        nav_legal: { en: 'legal notice', fr: 'mentions légales' },
+        nav_legal_url: { en: 'legal-notice', fr: 'mentions-légales' },
+        nav_privacy: { en: 'privacy policy', fr: 'confidentialité' },
+        nav_privacy_url: { en: 'privacy-policy', fr: 'confidentialité' }
     }
 </script>
 
@@ -133,7 +136,7 @@
             <li><a href="/{$language}">{dict.nav_shop[$language]}</a></li>
             <li><a href="{data.setup.a_propos}">{dict.nav_about[$language]}</a></li>
             <li>
-                <a href="/{$language}/panier">
+                <a href="/{$language}/{dict.nav_basket_url[$language]}">
                     <span class="badge" data-badge="{basketCount($basket)}" data-initial="YZ">{dict.nav_basket[$language]}</span>
                 </a>
             </li>
@@ -152,7 +155,7 @@
 
 <footer class="section section-footer">
     <ul class="container grid-lg">
-        <li><a href="/{$language}/privacy-policy">{dict.nav_privacy[$language]}</a></li>
-        <li><a href="/{$language}/legal-notice">{dict.nav_legal[$language]}</a></li>
+        <li><a href="/{$language}/{dict.nav_privacy_url[$language]}">{dict.nav_privacy[$language]}</a></li>
+        <li><a href="/{$language}/{dict.nav_legal_url[$language]}">{dict.nav_legal[$language]}</a></li>
     </ul>
 </footer>

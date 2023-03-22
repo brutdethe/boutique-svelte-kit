@@ -23,6 +23,10 @@
 	const slugify = (string) => string.replace(/\s/g,'-').replace(/---/g,'-')
 	
 	const dict = {
+		url: {
+			en: "product",
+			fr: 'produit'
+		},
 		title: {
 			en: "product's list",
 			fr: 'liste des produits'
@@ -81,7 +85,7 @@
 						<div class="card-subtitle text-gray">{product.catégorie} {product.type || ''}</div>
 					</div>
 					<div class="card-image">
-						<a href="{`/${$language}/produit/${slugify(product.titre[$language])}_${product.id}`}">
+						<a href="{`/${$language}/${dict.url[$language]}/${slugify(product.titre[$language])}_${product.id}`}">
 							<Photo
 								alt={`${product.titre[$language]} #${product.id}`}
 								url={`thumbs/${product.photos[0]}`} />
@@ -97,7 +101,7 @@
 						<div class="btn-group btn-group-block">
 							<button
 								class="detail btn btn-secondary"
-								on:click|once={goto(`/${$language}/produit/${slugify(product.titre[$language])}_${product.id}`)}
+								on:click|once={goto(`/${$language}/${dict.url[$language]}/${slugify(product.titre[$language])}_${product.id}`)}
 								data-product={product.id}>
 								{dict.detail[$language]}
 							</button>
