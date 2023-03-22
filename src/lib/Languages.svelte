@@ -1,23 +1,20 @@
 <script>
+	import {page} from '$app/stores'
 	import { language } from '$lib/stores.js'
+	import { replaceLanguageInUrl } from '$lib/utils.js'
 
 	function changeLanguageSelected(evt) {
-       
 		$language = evt.currentTarget.value
-		
-		function replaceLanguageInUrl(url, lang) {
-			const [, , ...rest] = url.pathname.split('/')
-			const new_pathname = `/${[lang, ...rest].join('/')}`
-			const newUrl = new URL(url.toString())
-			newUrl.pathname = new_pathname
-			
-			return newUrl.toString()
-		}
-
         history.pushState({ $language }, '', replaceLanguageInUrl(location, $language))
 		
 		return 
 	}
+
+	const handlePopStateEvent = async({state}) => {
+		$language = state['$language']
+	}
+
+	$language = $page.params.lang
 </script>
 
 <style>
@@ -34,6 +31,8 @@
 		}
 	}
 </style>
+
+<svelte:window on:popstate={handlePopStateEvent} />
 
 <div class="language column col-6">
 	<button
