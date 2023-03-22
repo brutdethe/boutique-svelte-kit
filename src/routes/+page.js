@@ -1,6 +1,6 @@
 import {
     redirect
-} from '@sveltejs/kit';
+} from '@sveltejs/kit'
 import {
     get
 } from 'svelte/store'
