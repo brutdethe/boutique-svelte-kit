@@ -3,30 +3,20 @@
 
 	function changeLanguageSelected(evt) {
        
-        $language = evt.currentTarget.value
-        
-        return 
+		$language = evt.currentTarget.value
 		
-		/*
-        lang = evt.currentTarget.value
-
-		if ($page.path === '/' && lang !== 'fr') {
-			goto(`${lang}/`);
-		} else if ($page.path === '/en/' && lang !== 'en') {
-			goto(`/`);
-		} else if (
-			$page.path.includes($pagesPath['product'].en) ||
-			$page.path.includes($pagesPath['product'].fr)
-		) {
-			const refProduct = $page.path.match(/[-].(étoile)/)
-			goto(`${$pagesPath['product'][lang]}${refProduct}`);
-		} else {
-			const pagePath = Object.keys($pagesPath).filter(
-				title => $pagesPath[title].en === $page.path || $pagesPath[title].fr === $page.path
-			)[0];
-			goto($pagesPath[pagePath][lang]);
+		function replaceLanguageInUrl(url, lang) {
+			const [, , ...rest] = url.pathname.split('/')
+			const new_pathname = `/${[lang, ...rest].join('/')}`
+			const newUrl = new URL(url.toString())
+			newUrl.pathname = new_pathname
+			
+			return newUrl.toString()
 		}
-		*/
+
+        history.pushState({ $language }, '', replaceLanguageInUrl(location, $language))
+		
+		return 
 	}
 </script>
 
