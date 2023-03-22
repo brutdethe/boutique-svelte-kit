@@ -30,6 +30,5 @@ export const rate = writable(1.1)
 
 export const getGithubUrl = writable((file) => getGhUrl(githubRepoName, file))
 
-export const setup = writable(async() => loadData(githubRepoName, 'setup.json'))
 export const categories = writable(async() => loadData(githubRepoName, 'categories.json'))
 export const products = writable(async() => loadData(githubRepoName, 'produits.json'))

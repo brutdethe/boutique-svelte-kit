@@ -6,7 +6,9 @@ import {
 export async function load({
     fetch
 }) {
-    const res = await fetch(`https://raw.githubusercontent.com/${PUBLIC_github_data_repo}/main/setup.json`)
+
+    const getGhUrl = (repo, file) => `https://raw.githubusercontent.com/${repo}/main/${file}`
+    const res = await fetch(getGhUrl(PUBLIC_github_data_repo, 'setup.json'))
     const setup = await res.json()
 
     return {
