@@ -134,7 +134,6 @@
                                 </label>
                                 <Photo
                                     alt={`${product.titre[$language]} #${product.id}`}
-                                    lang='fr'
                                     url={`carousels/${photo}`} />
 
                             </figure>

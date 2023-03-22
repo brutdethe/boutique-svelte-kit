@@ -79,7 +79,7 @@
 						<div class="card-subtitle text-gray">{product.catégorie} {product.type || ''}</div>
 					</div>
 					<div class="card-image">
-						<a href="/">
+						<a href="{`/${$language}/produit/${product.titre[$language]}_${product.id}`}">
 							<Photo
 								alt={`${product.titre[$language]} #${product.id}`}
 								url={`thumbs/${product.photos[0]}`} />
@@ -95,7 +95,7 @@
 						<div class="btn-group btn-group-block">
 							<button
 								class="detail btn btn-secondary"
-								on:click|once={goto(`/${$language}/produit/${product.catégorie}_${product.id}`)}
+								on:click|once={goto(`/${$language}/produit/${product.titre[$language]}_${product.id}`)}
 								data-product={product.id}>
 								{dict.detail[$language]}
 							</button>
