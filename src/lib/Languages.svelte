@@ -2,6 +2,7 @@
 	import {page} from '$app/stores'
 	import { language } from '$lib/stores.js'
 	import { replaceLanguageInUrl } from '$lib/utils.js'
+	import { browser } from '$app/environment'
 
 	function changeLanguageSelected(evt) {
 		$language = evt.currentTarget.value
@@ -13,9 +14,18 @@
 	const handlePopStateEvent = async({state}) => {
 		$language = state['$language']
 	}
+	
+	// adapt language with URL
+	if ($page.params.lang === 'fr' || $page.params.lang === 'en') {
+		$language = $page.params.lang
+	} else {
+		$language = 'en'
+		if (browser) {
+		    history.pushState({ $language }, '', replaceLanguageInUrl(location, $language))
+		}
+	}
 
-	$language = $page.params.lang
-</script>
+ </script>
 
 <style>
 	.language {
