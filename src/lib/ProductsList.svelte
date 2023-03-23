@@ -1,6 +1,6 @@
 <script>
     import { goto } from '$app/navigation'
-	import { categorySelected } from '$lib/stores.js'
+	import { language, categorySelected } from '$lib/stores.js'
     import Category from '$lib/Categories.svelte'
     import Photo from '$lib/Photo.svelte'
 	import Buy from '$lib/Buy.svelte'
@@ -20,7 +20,22 @@
 			.sort((a, b) => new Date(b.création) - new Date(a.création))
 	}
 
-	const slugify = (text) => text.toLowerCase().replace(" ", "-")
+	const slugify = (string) => string.replace(/\s/g,'-').replace(/---/g,'-')
+	
+	const dict = {
+		url: {
+			en: "product",
+			fr: 'produit'
+		},
+		title: {
+			en: "product's list",
+			fr: 'liste des produits'
+		},
+		detail: {
+			en: 'detail',
+			fr: 'détail'
+		}
+	}
 </script>
 
 <style>
@@ -53,6 +68,10 @@
 	}
 </style>
 
+<svelte:head>
+	<title>{dict.title[$language]} - {categories[$categorySelected].titre[$language]}</title>
+</svelte:head>
+
 <header>
 	<Category {categories} />
 </header>
@@ -62,18 +81,18 @@
 			<div class="column col-4 col-xs-12">
 				<article class="card">
 					<div class="card-header">
-						<div class="card-title h5">{product.titre.fr}</div>
-						<div class="card-subtitle text-gray">{categorySelected} {product.type || ''}</div>
+						<div class="card-title h5">{product.titre[$language]}</div>
+						<div class="card-subtitle text-gray">{product.catégorie} {product.type || ''}</div>
 					</div>
 					<div class="card-image">
-						<a href="/">
+						<a href="{`/${$language}/${dict.url[$language]}/${slugify(product.titre[$language])}_${product.id}`}">
 							<Photo
-								alt={`${product.titre.fr} #${product.id}`}
+								alt={`${product.titre[$language]} #${product.id}`}
 								url={`thumbs/${product.photos[0]}`} />
 						</a>
 					</div>
 					<div class="card-body">
-						<p class="description">{product.description.fr}</p>
+						<p class="description">{product.description[$language]}</p>
 						<h3 class="price">
 						    <Price price={product.prix} />
 						</h3>
@@ -82,9 +101,9 @@
 						<div class="btn-group btn-group-block">
 							<button
 								class="detail btn btn-secondary"
-								on:click|once={goto(`/produit/${slugify(categories[$categorySelected].titre.fr)}_${product.id}`)}
+								on:click|once={goto(`/${$language}/${dict.url[$language]}/${slugify(product.titre[$language])}_${product.id}`)}
 								data-product={product.id}>
-								détail
+								{dict.detail[$language]}
 							</button>
 							<Buy item={product} />
 						</div>

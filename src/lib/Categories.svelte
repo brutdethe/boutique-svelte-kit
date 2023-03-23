@@ -1,5 +1,5 @@
 <script>
-	import { categorySelected } from './stores.js'
+	import { language, categorySelected } from './stores.js'
 	export let categories
 	
     function changeCategory(evt) {
@@ -32,24 +32,24 @@
 	}
 </style>
 
-{#if categories && categories[$categorySelected]}
+{#if categories[$categorySelected]}
 	<div class="hero-sm bg-primary">
 		<div class="hero-body">
-			<h3>{categories[$categorySelected].titre.fr}</h3>
-			<p>{categories[$categorySelected].description.fr}</p>
+			<h3>{categories[$categorySelected].titre[$language]}</h3>
+			<p>{categories[$categorySelected].description[$language]}</p>
 		</div>
 	</div>
 
 	{#if categories.length > 1}
 		<div class="btn-list">
 			{#each categories as category, index}
-				{#if category.titre}
+				{#if category.titre[$language]}
 					<button
-						class="btn btn-sm {category.titre.fr === categories[$categorySelected].titre.fr ? 'btn-primary' : ''}"
+						class="btn btn-sm {category.titre[$language] === categories[$categorySelected].titre[$language] ? 'btn-primary' : ''}"
 						on:click={changeCategory}
 						data-id={index}
 						value={category}>
-							{category.titre.fr}
+							{category.titre[$language]}
 					</button>
 				{/if}
 			{/each}

@@ -2,14 +2,17 @@ import {
     get
 } from 'svelte/store'
 import {
-    setup
+    products,
+    categories
 } from '$lib/stores.js'
 
 /** @type {import('../../.svelte-kit/types/src/routes/$types').PageLoad} */
 export async function load() {
-    const data = await get(setup)()
+    const productsJson = await get(products)()
+    const categoriesJson = await get(categories)()
 
     return {
-        data
+        products: productsJson,
+        categories: categoriesJson
     }
 }

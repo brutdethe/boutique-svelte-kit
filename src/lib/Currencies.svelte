@@ -2,8 +2,9 @@
 	import { currency } from '$lib/stores.js'
 
 	function changeCurrencySelected(evt) {
-        currency.set($currency === 'EUR' ? 'USD' : 'EUR')
-        console.log($currency)
+		currency.set($currency === 'EUR' ? 'USD' : 'EUR')
+		
+		return
 	}
 </script>
 

@@ -1,10 +1,22 @@
 <script>
-  import Currencies from '$lib/Currencies.svelte' 
-  import { basket } from '$lib/stores.js'
-  
-  export let data  
+    import Currencies from '$lib/Currencies.svelte' 
+    import Languages from '$lib/Languages.svelte' 
+    import { language, basket } from '$lib/stores.js'
 
-  const basketCount = basket => basket.reduce((acc, product) => product.qty + acc, 0)
+    export let data  
+
+    const basketCount = basket => basket.reduce((acc, product) => product.qty + acc, 0)
+
+    const dict = {
+        nav_shop: { en: 'shop', fr: 'boutique' },
+        nav_about: { en: 'about', fr: 'à propos' },
+        nav_basket: { en: 'cart', fr: 'panier' },
+        nav_basket_url: { en: 'cart', fr: 'panier' },
+        nav_legal: { en: 'legal notice', fr: 'mentions légales' },
+        nav_legal_url: { en: 'legal-notice', fr: 'mentions-légales' },
+        nav_privacy: { en: 'privacy policy', fr: 'confidentialité' },
+        nav_privacy_url: { en: 'privacy-policy', fr: 'confidentialité' }
+    }
 </script>
 
 <style>
@@ -115,17 +127,17 @@
 
 <header class="columns">
     <h1 class="title column col-3 col-md-12">
-        <a href="/">
+        <a href="/{$language}">
             <img src="{data.setup.logo}" alt="logo boutique" class="logo">
         </a>
     </h1>
     <nav class="column col-7 col-md-9 col-sm-12">
         <ul>
-            <li><a href="/">boutique</a></li>
-            <li><a href="{data.setup.a_propos}">à propos</a></li>
+            <li><a href="/{$language}">{dict.nav_shop[$language]}</a></li>
+            <li><a href="{data.setup.a_propos}">{dict.nav_about[$language]}</a></li>
             <li>
-                <a href="/panier">
-                    <span class="badge" data-badge="{basketCount($basket)}" data-initial="YZ">panier</span>
+                <a href="/{$language}/{dict.nav_basket_url[$language]}">
+                    <span class="badge" data-badge="{basketCount($basket)}" data-initial="YZ">{dict.nav_basket[$language]}</span>
                 </a>
             </li>
         </ul>
@@ -133,10 +145,7 @@
 
     <div class="i18n columns col-gapless column col-2 col-md-3 col-sm-12">
         <Currencies />
-        <div class="language column col-6">
-            <button class="btn btn-sm bg-secondary" value="fr">FR</button>
-            <button class="btn btn-sm " value="en">EN</button>
-        </div>
+        <Languages />
     </div>
 </header>
 
@@ -146,7 +155,7 @@
 
 <footer class="section section-footer">
     <ul class="container grid-lg">
-        <li><a href="/confidentialite">confidentialité</a></li>
-        <li><a href="/mentions-legales">mentions légales</a></li>
+        <li><a href="/{$language}/{dict.nav_privacy_url[$language]}">{dict.nav_privacy[$language]}</a></li>
+        <li><a href="/{$language}/{dict.nav_legal_url[$language]}">{dict.nav_legal[$language]}</a></li>
     </ul>
 </footer>
