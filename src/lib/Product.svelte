@@ -3,6 +3,7 @@
     import Buy from '$lib/Buy.svelte'
     import Photo from '$lib/Photo.svelte'
     import Price from '$lib/Price.svelte'
+    import ProductNotFound from '$lib/ProductNotFound.svelte'
 
     export let product
 
@@ -198,4 +199,6 @@
             </div>
         </div>
     </div>
+{:else}
+    <ProductNotFound />
 {/if}
