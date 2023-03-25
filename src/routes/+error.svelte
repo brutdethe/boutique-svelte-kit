@@ -31,12 +31,6 @@
     }
   }
 
-  @media (max-width: 600px) {
-    ul {
-        justify-content: center;
-    }
-  }
-
 </style>
 
 
