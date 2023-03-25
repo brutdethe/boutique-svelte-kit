@@ -6,7 +6,8 @@
 
 	function changeLanguageSelected(evt) {
 		$language = evt.currentTarget.value
-        history.pushState({ $language }, '', replaceLanguageInUrl(location, $language))
+		history.pushState({ $language }, '', replaceLanguageInUrl(location, $language))
+		document.documentElement.lang = $language
 		
 		return 
 	}
