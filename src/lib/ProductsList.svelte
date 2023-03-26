@@ -5,6 +5,7 @@
     import Photo from '$lib/Photo.svelte'
 	import Buy from '$lib/Buy.svelte'
 	import Price from '$lib/Price.svelte'
+	import Loading from '$lib/Loading.svelte'
 
 	export let categories
 	export let products
@@ -77,6 +78,7 @@
 </header>
 <section>
 	<div class="columns">
+		{#if products}
 		{#each getProductsByCategory(products, categories[$categorySelected].label) as product}
 			<div class="column col-4 col-xs-12">
 				<article class="card">
@@ -111,5 +113,8 @@
 				</article>
 			</div>
 		{/each}
+		{:else}
+			<Loading />
+		{/if}
 	</div>
 </section>
