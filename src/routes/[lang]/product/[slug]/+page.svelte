@@ -4,4 +4,4 @@
     export let data
 </script>
 
-<Product product={data.product} />
+<Product {data} />

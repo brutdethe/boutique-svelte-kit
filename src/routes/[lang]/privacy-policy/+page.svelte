@@ -4,4 +4,4 @@
 	export let data
 </script>
 
-<PrivacyPolicy {data} />
+<PrivacyPolicy setup={data.setup} />

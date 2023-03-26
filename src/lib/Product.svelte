@@ -5,7 +5,9 @@
     import Price from '$lib/Price.svelte'
     import ProductNotFound from '$lib/ProductNotFound.svelte'
 
-    export let product
+    export let data
+
+    const product = data.products.filter(item => item.id === data.productIdParam)[0]
 
 	function getWeight(weight, lang) {
 		if (lang === 'en') {

@@ -1,12 +1,8 @@
-import {
-    findProduct
-} from '$lib/utils.js'
-
-export function load({
+/** @type {import('./$types').PageLoad} */
+export async function load({
     params
 }) {
-
     return {
-        product: findProduct(params.slug.split("_")[1])
+        productIdParam: params.slug.split("_")[1]
     }
 }
