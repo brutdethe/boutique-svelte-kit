@@ -7,11 +7,24 @@ export async function load({
     fetch
 }) {
 
-    const getGhUrl = (repo, file) => `https://raw.githubusercontent.com/${repo}/main/${file}`
-    const res = await fetch(getGhUrl(PUBLIC_github_data_repo, 'setup.json'))
-    const setup = await res.json()
+    const githubRepoName = PUBLIC_github_data_repo
+
+    async function loadData(repo, file) {
+        const getGhUrl = (repo, file) =>
+            `https://raw.githubusercontent.com/${repo}/main/${file}`
+
+        const res = await fetch(getGhUrl(repo, file))
+
+        return await res.json()
+    }
+
+    const setup = await loadData(githubRepoName, 'setup.json')
+    const categories = await loadData(githubRepoName, 'categories.json')
+    const products = await loadData(githubRepoName, 'produits.json')
 
     return {
-        setup
+        setup,
+        categories,
+        products
     }
 }

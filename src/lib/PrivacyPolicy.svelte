@@ -1,7 +1,7 @@
 <script>
     import { language } from '$lib/stores.js'
 
-    export let data
+    export let setup
 
     const dict = {
             slug: {
@@ -13,8 +13,8 @@
                 fr: 'Confidentialité'
             },
             site: {
-                en: `The site <a href="https://${data.setup.site}">${data.setup.site}</a> does not collect personal data.`,
-                fr: `Le site <a href="https://${data.setup.site}">${data.setup.site}</a> ne collecte pas de données personnelles.`
+                en: `The site <a href="https://${setup.site}">${setup.site}</a> does not collect personal `,
+                fr: `Le site <a href="https://${setup.site}">${setup.site}</a> ne collecte pas de données personnelles.`
             }
     }
 </script>

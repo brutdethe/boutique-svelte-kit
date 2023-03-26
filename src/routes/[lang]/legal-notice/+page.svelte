@@ -4,4 +4,4 @@
 	export let data
 </script>
 
-<LegalNotice {data} />
+<LegalNotice setup={data.setup} />
