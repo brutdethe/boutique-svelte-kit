@@ -50,9 +50,8 @@
 		// TODO shipping
 		return 12
 
-		const weightTotal = basket.reduce((acc, product) => product.poids * product.qty + acc, 0) || 0
-
-		return collisimo[country].filter(rate => weightTotal <= rate.limit)[0].price
+		// const weightTotal = basket.reduce((acc, product) => product.poids * product.qty + acc, 0) || 0
+		// return collisimo[country].filter(rate => weightTotal <= rate.limit)[0].price
 	}
 
 	function calculateSubTotal(basket, currency) {
@@ -105,6 +104,10 @@
 </script>
 
 <style>
+	button {
+		border: none;
+		background: transparent;
+	}
 	table {
 		margin: 1rem 0;
 	}
@@ -118,9 +121,6 @@
 
 <svelte:head>
 	<title>{dict.title[$language]}</title>
-	<script src="https://js.stripe.com/v3/">
-
-	</script>
 </svelte:head>
 
 <h2>{dict.title[$language]}</h2>
@@ -149,7 +149,9 @@
 									</a>
 								</td>
 								<td>
-									<i class="icon icon-delete c-hand" on:click|once={deleteClick(item.id)} />
+								<button on:click|once={deleteClick(item.id)}>
+									<i class="icon icon-delete c-hand" />
+								</button>
 								</td>
 								<td class="text-right">
 									<Price price={item.prix} />
