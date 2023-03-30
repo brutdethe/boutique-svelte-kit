@@ -84,6 +84,10 @@
 		cultivar: {
 			en: 'Cultivar',
 			fr: 'Cultivar'
+        },
+        location: {
+			en: 'Location',
+			fr: 'Village'
 		},
 		type: {
 			en: 'Type',
@@ -100,6 +104,10 @@
 		card: {
 			en: 'Card',
 			fr: 'Fiche'
+        },
+        stock: {
+			en: 'Stock',
+			fr: 'Stock'
 		},
 		vintage: {
 			en: 'Vintage',
@@ -198,38 +206,38 @@
                 <p>{product.description[$language]}</p>
                 <dl>
                     {#if 'cultivar' in product}
-                        <dt>Cultivar :&nbsp;</dt>
+                        <dt>{dict.cultivar[$language]} :&nbsp;</dt>
                         <dd>{product.cultivar}</dd>
                     {/if}
                     {#if 'producteur' in product}
-                        <dt>Producteur :&nbsp;</dt>
+                        <dt>{dict.producer[$language]} :&nbsp;</dt>
                         <dd>{product.producteur}</dd>
                     {/if}
                     {#if 'village' in product || 'province' in product}
-                        <dt>Village :&nbsp;</dt>
+                        <dt>{dict.location[$language]} :&nbsp;</dt>
                         <dd>{product.village || ''} - {product.province || ''}</dd>
                     {/if}
                     {#if 'altitude' in product}
-                        <dt>Altitude :&nbsp;</dt>
+                        <dt>{dict.elevation[$language]} :&nbsp;</dt>
                         <dd>{getElevation(product.altitude, $language)}</dd>
                     {/if}
                     {#if 'millésime' in product}
-                        <dt>Millésime :&nbsp;</dt>
+                        <dt>{dict.vintage[$language]} :&nbsp;</dt>
                         <dd>{product.millésime}</dd>
                     {/if}
                     {#if 'capacité' in product}
-                        <dt>Capacité :&nbsp;</dt>
+                        <dt>{dict.capacity[$language]} :&nbsp;</dt>
                         <dd>{getCapacity(product.capacité, $language)}</dd>
                     {/if}
                     {#if 'poids' in product}
-                        <dt>Poids :&nbsp;</dt>
+                        <dt>{dict.weight[$language]} :&nbsp;</dt>
                         <dd>{getWeight(product.poids, $language)}</dd>
                     {/if}
                     {#if 'dimension' in product}
-                        <dt>Dimension :&nbsp;</dt>
+                        <dt>{dict.size[$language]} :&nbsp;</dt>
                         <dd>{getSize(product.dimension, $language)}</dd>
                     {/if}
-                    <dt>Stock :&nbsp;</dt>
+                    <dt>{dict.stock[$language]} :&nbsp;</dt>
                     <dd>{getStock(product.stock, $language)}</dd>
                 </dl>
             </div>
