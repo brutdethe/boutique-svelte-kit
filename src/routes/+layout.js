@@ -22,9 +22,17 @@ export async function load({
     const categories = await loadData(githubRepoName, 'categories.json')
     const products = await loadData(githubRepoName, 'produits.json')
 
+    const res = await fetch('/api/sales.json')
+    const sales = await res.json()
+
+    const productsWithStock = products.map(product => {
+        product.stock = +product["quantité_produite"] - (+sales[product.id] || 0)
+        return product
+    }).filter(product => product.stock > 0)
+
     return {
         setup,
         categories,
-        products
+        productsWithStock
     }
 }

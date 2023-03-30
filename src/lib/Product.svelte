@@ -7,7 +7,7 @@
 
     export let data
 
-    const product = data.products.filter(item => item.id === data.productIdParam)[0]
+    const product = data.productsWithStock.filter(item => item.id === data.productIdParam)[0]
 
 	function getWeight(weight, lang) {
 		if (lang === 'en') {
@@ -64,6 +64,46 @@
 		title: {
 			en: "product sheet",
 			fr: 'fiche produit'
+		},
+		weight: {
+			en: 'Weight',
+			fr: 'Poids'
+		},
+		size: {
+			en: 'Size',
+			fr: 'Dimensions'
+		},
+		capacity: {
+			en: 'Capacity',
+			fr: 'Capacité'
+		},
+		location: {
+			en: 'Location',
+			fr: 'Lieu'
+		},
+		cultivar: {
+			en: 'Cultivar',
+			fr: 'Cultivar'
+		},
+		type: {
+			en: 'Type',
+			fr: 'Type'
+		},
+		producer: {
+			en: 'Producer',
+			fr: 'Producteur'
+		},
+		elevation: {
+			en: 'Elevation',
+			fr: 'Altitude'
+		},
+		card: {
+			en: 'Card',
+			fr: 'Fiche'
+		},
+		vintage: {
+			en: 'Vintage',
+			fr: 'Millésime'
 		}
 	}
 </script>
@@ -190,7 +230,7 @@
                         <dd>{getSize(product.dimension, $language)}</dd>
                     {/if}
                     <dt>Stock :&nbsp;</dt>
-                    <dd>{getStock(1, $language)}</dd>
+                    <dd>{getStock(product.stock, $language)}</dd>
                 </dl>
             </div>
             <div class="card-footer">
