@@ -31,14 +31,6 @@ async function getPaidsSessionsIds(stripe) {
     return ids
 }
 
-async function getLastSessionId(stripe) {
-    const response = await stripe.checkout.sessions.list({
-        limit: 1
-    })
-
-    return response.data[0].id
-}
-
 async function getSessionsItems(stripe, sessionIds) {
     return Promise.all(sessionIds.map(sessionId => stripe.checkout.sessions.listLineItems(sessionId)))
 }
@@ -68,15 +60,12 @@ function getItemsGroupBy(items) {
     }, {})
 }
 
-
-
 export const GET = async() => {
     try {
         const stripeKeySk = SECRET_stripe_sk
         const stripe = new Stripe(stripeKeySk, {
             "telemetry": false
         })
-
         const checkoutSessionIds = await getPaidsSessionsIds(stripe)
         const sessionsItems = await getSessionsItems(stripe, checkoutSessionIds)
         const items = getItems(sessionsItems)
