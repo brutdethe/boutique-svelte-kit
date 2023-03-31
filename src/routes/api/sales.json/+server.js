@@ -62,10 +62,10 @@ function getItemsGroupBy(items) {
         return prev
     }, new Map())
 
-    return [...counts].map(([id, quantity]) => ({
-        id,
-        quantity
-    }))
+    return [...counts].reduce((result, [id, quantity]) => {
+        result[id] = quantity
+        return result
+    }, {})
 }
 
 
