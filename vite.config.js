@@ -10,11 +10,4 @@ export default defineConfig({
     test: {
         include: ['src/**/*.{test,spec}.{js,ts}']
     },
-    build: {
-        rollupOptions: {
-            external: [
-                "stripe"
-            ],
-        },
-    },
 })
