@@ -4,34 +4,36 @@ import {
 import Stripe from 'stripe'
 
 async function getPaidsSessionsIds(stripe) {
+    const ids = []
 
-    async function getCheckoutSessions(starting_after = null) {
-        const options = {
-            limit: 100
+    const listSessions = async(options) => {
+        const response = await stripe.checkout.sessions.list(options)
+        const sessions = response.data
+        const paidSessions = sessions
+        paidSessions.forEach((session) => ids.push(session.id))
+
+        if (response.has_more) {
+            const lastSessionId = sessions[sessions.length - 1].id
+            await listSessions({
+                ...options,
+                starting_after: lastSessionId
+            })
         }
-        if (starting_after) {
-            options.starting_after = starting_after
-        }
-
-        return await stripe.checkout.sessions.list(options)
     }
 
-    function getPaidCheckoutsIds(checkoutsData) {
-        return checkoutsData.filter(session => session.payment_status === 'paid').map(session => session.id)
-    }
+    await listSessions({
+        limit: 100
+    })
 
-    let has_more = true
-    let checkoutIDs = []
-    let lastIDs = null
+    return ids
+}
 
-    while (has_more) {
-        let checkoutSessions = await getCheckoutSessions(lastIDs)
-        has_more = checkoutSessions.has_more
-        checkoutIDs = checkoutIDs.concat(getPaidCheckoutsIds(checkoutSessions.data))
-        lastIDs = checkoutSessions.data[checkoutSessions.data.length - 1].id
-    }
+async function getLastSessionId(stripe) {
+    const response = await stripe.checkout.sessions.list({
+        limit: 1
+    })
 
-    return checkoutIDs
+    return response.data[0].id
 }
 
 
@@ -50,7 +52,7 @@ export const GET = async({
     const stripeKeySk = SECRET_stripe_sk
     const stripe = new Stripe(stripeKeySk)
     console.log("Stripe", await getPaidsSessionsIds(stripe))
-
+    console.log('last', await getLastSessionId(stripe))
     return new Response(JSON.stringify(sales), {
         status: 200
     })
