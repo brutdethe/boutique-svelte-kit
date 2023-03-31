@@ -1,0 +1,117 @@
+{
+    "france": [{
+            "limit": 0,
+            "EUR": 0
+        },
+        {
+            "limit": 0.25,
+            "EUR": 6
+        },
+        {
+            "limit": 0.5,
+            "EUR": 7
+        },
+        {
+            "limit": 0.75,
+            "EUR": 8
+        },
+        {
+            "limit": 1,
+            "EUR": 9
+        },
+        {
+            "limit": 2,
+            "EUR": 10
+        },
+        {
+            "limit": 5,
+            "EUR": 16
+        },
+        {
+            "limit": 10,
+            "EUR": 24
+        },
+        {
+            "limit": 15,
+            "EUR": 30
+        },
+        {
+            "limit": 30,
+            "EUR": 35
+        }
+    ],
+    "europe": [{
+            "limit": 0,
+            "EUR": 0
+        },
+        {
+            "limit": 0.25,
+            "EUR": 8
+        },
+        {
+            "limit": 0.5,
+            "EUR": 9
+        },
+        {
+            "limit": 0.75,
+            "EUR": 10
+        },
+        {
+            "limit": 1,
+            "EUR": 16
+        },
+        {
+            "limit": 2,
+            "EUR": 23
+        },
+        {
+            "limit": 5,
+            "EUR": 29
+        },
+        {
+            "limit": 10,
+            "EUR": 36
+        },
+        {
+            "limit": 15,
+            "EUR": 43
+        },
+        {
+            "limit": 30,
+            "EUR": 47
+        }
+    ],
+    "international": [{
+            "limit": 0,
+            "EUR": 0
+        },
+        {
+            "limit": 0.5,
+            "EUR": 30
+        },
+        {
+            "limit": 1,
+            "EUR": 34
+        },
+        {
+            "limit": 2,
+            "EUR": 45
+        },
+        {
+            "limit": 5,
+            "EUR": 65
+        },
+        {
+            "limit": 10,
+            "EUR": 122
+        },
+        {
+            "limit": 15,
+            "EUR": 173
+        },
+        {
+            "limit": 20,
+            "EUR": 226
+        }
+    ]
+}
