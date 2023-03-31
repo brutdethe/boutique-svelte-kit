@@ -2,6 +2,7 @@
 	import { language, basket, currency, rate, country } from '$lib/stores.js'
 	import Price from '$lib//Price.svelte'
 	import Countries from '$lib/Countries.svelte'
+	import colissimo from '$lib/data/shipping.json'
 
 	let dataDomain
 
@@ -9,49 +10,11 @@
 		return
 	}
 
-	function shippingCost(basket, country) {
-		const collisimo = {
-			france: [
-				{ limit: 0, price: { EUR: 0, USD: 0 } },
-				{ limit: 0.25, price: { EUR: 6, USD: Math.ceil(5 * $rate) } },
-				{ limit: 0.5, price: { EUR: 7, USD: Math.ceil(6 * $rate) } },
-				{ limit: 0.75, price: { EUR: 8, USD: Math.ceil(7 * $rate) } },
-				{ limit: 1, price: { EUR: 9, USD: Math.ceil(8 * $rate) } },
-				{ limit: 2, price: { EUR: 10, USD: Math.ceil(9 * $rate) } },
-				{ limit: 5, price: { EUR: 16, USD: Math.ceil(14 * $rate) } },
-				{ limit: 10, price: { EUR: 24, USD: Math.ceil(21 * $rate) } },
-				{ limit: 15, price: { EUR: 30, USD: Math.ceil(26 * $rate) } },
-				{ limit: 30, price: { EUR: 35, USD: Math.ceil(32 * $rate) } }
-			],
-			europe: [
-				{ limit: 0, price: { EUR: 0, USD: 0 } },
-				{ limit: 0.25, price: { EUR: 8, USD: Math.ceil(7 * $rate) } },
-				{ limit: 0.5, price: { EUR: 9, USD: Math.ceil(8 * $rate) } },
-				{ limit: 0.75, price: { EUR: 10, USD: Math.ceil(9 * $rate) } },
-				{ limit: 1, price: { EUR: 16, USD: Math.ceil(14 * $rate) } },
-				{ limit: 2, price: { EUR: 23, USD: Math.ceil(21 * $rate) } },
-				{ limit: 5, price: { EUR: 29, USD: Math.ceil(26 * $rate) } },
-				{ limit: 10, price: { EUR: 36, USD: Math.ceil(32 * $rate) } },
-				{ limit: 15, price: { EUR: 43, USD: Math.ceil(38 * $rate) } },
-				{ limit: 30, price: { EUR: 47, USD: Math.ceil(43 * $rate) } }
-			],
-			international: [
-				{ limit: 0, price: { EUR: 0, USD: 0 } },
-				{ limit: 0.5, price: { EUR: 30, USD: Math.ceil(28 * $rate) } },
-				{ limit: 1, price: { EUR: 34, USD: Math.ceil(32 * $rate) } },
-				{ limit: 2, price: { EUR: 45, USD: Math.ceil(43 * $rate) } },
-				{ limit: 5, price: { EUR: 65, USD: Math.ceil(63 * $rate) } },
-				{ limit: 10, price: { EUR: 122, USD: Math.ceil(119 * $rate) } },
-				{ limit: 15, price: { EUR: 173, USD: Math.ceil(169 * $rate) } },
-				{ limit: 20, price: { EUR: 226, USD: Math.ceil(206 * $rate) } }
-			]
-		}
+	function shippingCost(basket, country, currency, rate, colissimo) {
+		const weightTotal = basket.reduce((acc, product) => product.poids * product.qty + acc + .1 , 0) || 0
+		const priceEuros = colissimo[country].filter(rate => weightTotal <= rate.limit)[0].EUR
 
-		// TODO shipping
-		return 12
-
-		// const weightTotal = basket.reduce((acc, product) => product.poids * product.qty + acc, 0) || 0
-		// return collisimo[country].filter(rate => weightTotal <= rate.limit)[0].price
+		return currency ==='EUR' ? priceEuros : +priceEuros*+rate
 	}
 
 	function calculateSubTotal(basket, currency) {
@@ -59,7 +22,7 @@
 	}
 
 	$: subTotal = calculateSubTotal($basket, 'EUR')
-	$: shipping = shippingCost($basket, $country)
+	$: shipping = shippingCost($basket, $country, $currency, $rate, colissimo)
 	$: total = +shipping + +subTotal
 
 	function deleteClick(id) {
