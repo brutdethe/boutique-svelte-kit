@@ -36,11 +36,25 @@ async function getLastSessionId(stripe) {
     return response.data[0].id
 }
 
+async function getSessionsItems(stripe, sessionIds) {
+    return Promise.all(sessionIds.map(sessionId => stripe.checkout.sessions.listLineItems(sessionId)))
+}
 
-export const GET = async({
-    request,
-    url
-}) => {
+function getItems(sessionsItems) {
+
+    return sessionsItems
+        .map(items => items.data)
+        .flat()
+        .filter(item => item.description.match(/id:.*$/))
+        .map(item => ({
+            id: item.description.match(/id:(.*)$/)[1],
+            quantity: item.quantity
+        }))
+}
+
+
+
+export const GET = async() => {
     const sales = {
         "lu2": 3,
         "wulong1": 1,
@@ -48,11 +62,19 @@ export const GET = async({
         "puer2": 2
     }
 
-
     const stripeKeySk = SECRET_stripe_sk
-    const stripe = new Stripe(stripeKeySk)
-    console.log("Stripe", await getPaidsSessionsIds(stripe))
+    const stripe = new Stripe(stripeKeySk, {
+        telemetry: false
+    })
+
+    const checkoutSessionIds = await getPaidsSessionsIds(stripe)
+    const sessionsItems = await getSessionsItems(stripe, checkoutSessionIds)
+    const items = getItems(sessionsItems)
+
+    //toudoux check if sessions
+    console.log('item', items)
     console.log('last', await getLastSessionId(stripe))
+
     return new Response(JSON.stringify(sales), {
         status: 200
     })
