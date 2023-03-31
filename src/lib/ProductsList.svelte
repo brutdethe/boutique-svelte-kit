@@ -8,7 +8,7 @@
 	import Loading from '$lib/Loading.svelte'
 
 	export let categories
-	export let products
+	export let productsWithStock
 
 	// Old version: categories.json
 	if (!Array.isArray(categories)) {
@@ -78,8 +78,8 @@
 </header>
 <section>
 	<div class="columns">
-		{#if products}
-		{#each getProductsByCategory(products, categories[$categorySelected].label) as product}
+		{#if productsWithStock}
+		{#each getProductsByCategory(productsWithStock, categories[$categorySelected].label) as product}
 			<div class="column col-4 col-xs-12">
 				<article class="card">
 					<div class="card-header">

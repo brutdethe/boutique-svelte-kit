@@ -3,7 +3,7 @@
   
   export let data
 
-  const products = data.products
+  const productsWithStock = data.productsWithStock
   const categories = data.categories
 
 </script>
@@ -32,5 +32,5 @@
 </style>
 
 <section>
-    <ProductsList {products} {categories} />
+    <ProductsList {productsWithStock} {categories} />
 </section>

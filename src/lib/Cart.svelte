@@ -140,7 +140,6 @@
 				</thead>
 				<tbody>
 					{#each $basket as item, index}
-					{item.stock = 2}
 						{#if item.stock > 0}
 							<tr class="active">
 								<td>
