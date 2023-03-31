@@ -12,7 +12,7 @@ async function getPaidsSessionsIds(stripe) {
     const listSessions = async(options) => {
         const response = await stripe.checkout.sessions.list(options)
         const sessions = response.data
-        const paidSessions = sessions
+        const paidSessions = sessions.filter(session => session.payment_status === 'paid')
         paidSessions.forEach((session) => ids.push(session.id))
 
         if (response.has_more) {
