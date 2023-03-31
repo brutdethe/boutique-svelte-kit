@@ -52,6 +52,19 @@ function getItems(sessionsItems) {
         }))
 }
 
+function getItemsGroupBy(items) {
+    const counts = items.reduce((prev, curr) => {
+        let count = prev.get(curr.id) || 0
+        prev.set(curr.id, +curr.quantity + count)
+        return prev
+    }, new Map())
+
+    return [...counts].map(([id, quantity]) => ({
+        id,
+        quantity
+    }))
+}
+
 
 
 export const GET = async() => {
@@ -70,9 +83,10 @@ export const GET = async() => {
     const checkoutSessionIds = await getPaidsSessionsIds(stripe)
     const sessionsItems = await getSessionsItems(stripe, checkoutSessionIds)
     const items = getItems(sessionsItems)
+    const itemsGroupBy = getItemsGroupBy(items)
 
     //toudoux check if sessions
-    console.log('item', items)
+    console.log('item', itemsGroupBy)
     console.log('last', await getLastSessionId(stripe))
 
     return new Response(JSON.stringify(sales), {
