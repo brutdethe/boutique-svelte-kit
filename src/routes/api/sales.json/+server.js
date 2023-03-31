@@ -1,4 +1,7 @@
 import {
+    error
+} from '@sveltejs/kit';
+import {
     SECRET_stripe_sk
 } from '$env/static/private'
 import Stripe from 'stripe'
@@ -68,28 +71,23 @@ function getItemsGroupBy(items) {
 
 
 export const GET = async() => {
-    const sales = {
-        "lu2": 3,
-        "wulong1": 1,
-        "manontas44": 1,
-        "puer2": 2
+    try {
+        const stripeKeySk = SECRET_stripe_sk
+        const stripe = new Stripe(stripeKeySk, {
+            "telemetry": false
+        })
+
+        const checkoutSessionIds = await getPaidsSessionsIds(stripe)
+        const sessionsItems = await getSessionsItems(stripe, checkoutSessionIds)
+        const items = getItems(sessionsItems)
+        const itemsGroupBy = await getItemsGroupBy(items)
+
+        return new Response(JSON.stringify(itemsGroupBy), {
+            status: 200
+        })
+    } catch (err) {
+        throw error(500, {
+            message: err
+        })
     }
-
-    const stripeKeySk = SECRET_stripe_sk
-    const stripe = new Stripe(stripeKeySk, {
-        telemetry: false
-    })
-
-    const checkoutSessionIds = await getPaidsSessionsIds(stripe)
-    const sessionsItems = await getSessionsItems(stripe, checkoutSessionIds)
-    const items = getItems(sessionsItems)
-    const itemsGroupBy = getItemsGroupBy(items)
-
-    //toudoux check if sessions
-    console.log('item', itemsGroupBy)
-    console.log('last', await getLastSessionId(stripe))
-
-    return new Response(JSON.stringify(sales), {
-        status: 200
-    })
 }
