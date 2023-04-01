@@ -29,7 +29,7 @@ export async function load({
 
     let sales = {}
 
-    if (lastSessionId !== salesBak.lastSessionId) {
+    if (lastSessionId.id !== salesBak.lastSessionId) {
         sales = await fetch('/api/sales.json').then(res => res.json())
     } else {
         sales = salesBak.sales
