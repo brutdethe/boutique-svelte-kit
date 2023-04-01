@@ -14,16 +14,17 @@ export async function load({
             `https://raw.githubusercontent.com/${repo}/main/${file}`
 
         const res = await fetch(getGhUrl(repo, file))
+        const data = await res.json()
 
-        return await res.json()
+        return data
     }
 
-    const setup = await loadData(githubRepoName, 'setup.json')
-    const categories = await loadData(githubRepoName, 'categories.json')
-    const products = await loadData(githubRepoName, 'produits.json')
-
-    const res = await fetch('/api/sales.json')
-    const sales = await res.json()
+    const [setup, categories, products, sales] = await Promise.all([
+        loadData(githubRepoName, 'setup.json'),
+        loadData(githubRepoName, 'categories.json'),
+        loadData(githubRepoName, 'produits.json'),
+        fetch('/api/sales.json').then(res => res.json())
+    ])
 
     const productsWithStock = products.map(product => {
         product.stock = +product["quantité_produite"] - (+sales[product.id] || 0)
