@@ -1,78 +1,131 @@
 import {
     error
-} from '@sveltejs/kit';
+} from '@sveltejs/kit'
 import {
     SECRET_stripe_sk
 } from '$env/static/private'
 import Stripe from 'stripe'
+import salesBackup from '$lib/data/sales.bak.json'
 
-async function getPaidsSessionsIds(stripe) {
-    const ids = []
+async function getPaidsSessionsIds(stripe, oldLastSessionId) {
+    const sessionIds = []
+    let newLastSessionId = ''
+    let isSalesBuffer = false
 
-    const listSessions = async(options) => {
-        const response = await stripe.checkout.sessions.list(options)
-        const sessions = response.data
-        const paidSessions = sessions.filter(session => session.payment_status === 'paid')
-        paidSessions.forEach((session) => ids.push(session.id))
+    const listSessions = async({
+        limit,
+        starting_after
+    }) => {
+        const {
+            data,
+            has_more
+        } = await stripe.checkout.sessions.list({
+            limit,
+            starting_after,
+        })
 
-        if (response.has_more) {
+        let sessions = data
+
+        if (!newLastSessionId) {
+            newLastSessionId = sessions[0].id
+        }
+
+        const index = sessions.map((session) => session.id).indexOf(oldLastSessionId)
+
+        if (index !== -1) {
+            sessions = sessions.slice(0, index + 1)
+            isSalesBuffer = true
+        }
+
+        const paidSessions = sessions.filter((session) => session.payment_status === 'paid')
+
+        for (const session of paidSessions) {
+            sessionIds.push(session.id)
+        }
+
+        if (has_more && !isSalesBuffer) {
             const lastSessionId = sessions[sessions.length - 1].id
             await listSessions({
-                ...options,
-                starting_after: lastSessionId
+                limit: 100,
+                starting_after: lastSessionId,
             })
         }
     }
 
     await listSessions({
-        limit: 100
+        limit: 1
     })
 
-    return ids
+    return {
+        sessionIds,
+        isSalesBuffer,
+        lastSessionId: newLastSessionId,
+    }
 }
 
 async function getSessionsItems(stripe, sessionIds) {
-    return Promise.all(sessionIds.map(sessionId => stripe.checkout.sessions.listLineItems(sessionId)))
+    const sessionsItems = await Promise.all(
+        sessionIds.map((sessionId) => stripe.checkout.sessions.listLineItems(sessionId))
+    )
+    return sessionsItems
 }
 
 function getItems(sessionsItems) {
-
-    return sessionsItems
-        .map(items => items.data)
-        .flat()
-        .filter(item => item.description.match(/id:.*$/))
-        .map(item => ({
+    const items = sessionsItems
+        .flatMap((items) => items.data)
+        .filter((item) => item.description.match(/id:.*$/))
+        .map((item) => ({
             id: item.description.match(/id:(.*)$/)[1],
-            quantity: item.quantity
+            quantity: item.quantity,
         }))
+    return items
 }
 
 function getItemsGroupBy(items) {
-    const counts = items.reduce((prev, curr) => {
-        let count = prev.get(curr.id) || 0
-        prev.set(curr.id, +curr.quantity + count)
-        return prev
-    }, new Map())
-
-    return [...counts].reduce((result, [id, quantity]) => {
-        result[id] = quantity
-        return result
+    return items.reduce((group, {
+        id,
+        quantity
+    }) => {
+        group[id] = (group[id] || 0) + quantity
+        return group
     }, {})
 }
 
 export const GET = async() => {
     try {
-        const stripeKeySk = SECRET_stripe_sk
-        const stripe = new Stripe(stripeKeySk, {
-            "telemetry": false
+        const stripeSecretKey = SECRET_stripe_sk
+        const stripe = new Stripe(stripeSecretKey, {
+            telemetry: false
         })
-        const checkoutSessionIds = await getPaidsSessionsIds(stripe)
-        const sessionsItems = await getSessionsItems(stripe, checkoutSessionIds)
-        const items = getItems(sessionsItems)
-        const itemsGroupBy = await getItemsGroupBy(items)
 
-        return new Response(JSON.stringify(itemsGroupBy), {
-            status: 200
+        const {
+            sessionIds,
+            isSalesBuffer,
+            lastSessionId
+        } = await getPaidsSessionsIds(stripe, salesBackup.lastSessionId)
+
+        const sessionsItems = await getSessionsItems(stripe, sessionIds)
+        let items = getItems(sessionsItems)
+
+        if (isSalesBuffer) {
+            items = Object.entries(salesBackup.sales).map(([id, quantity]) => ({
+                id,
+                quantity,
+            })).concat(items)
+        }
+
+        const itemsGroupBy = getItemsGroupBy(items)
+
+        const salesJsonContent = {
+            lastSessionId,
+            sales: itemsGroupBy,
+        }
+
+        return new Response(JSON.stringify(salesJsonContent), {
+            status: 200,
+            headers: {
+                'Content-Type': 'application/json',
+            },
         })
     } catch (err) {
         throw error(500, {
