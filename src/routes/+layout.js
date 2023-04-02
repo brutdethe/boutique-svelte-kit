@@ -1,6 +1,7 @@
 import {
     PUBLIC_github_data_repo
 } from '$env/static/public'
+import salesBak from '$lib/data/sales.bak.json'
 
 /** @type {import('../../.svelte-kit/types/src/routes/$types').PageLoad} */
 export async function load({
@@ -19,12 +20,20 @@ export async function load({
         return data
     }
 
-    const [setup, categories, products, sales] = await Promise.all([
+    const [setup, categories, products, lastSessionId] = await Promise.all([
         loadData(githubRepoName, 'setup.json'),
         loadData(githubRepoName, 'categories.json'),
         loadData(githubRepoName, 'produits.json'),
-        fetch('/api/sales.json').then(res => res.json())
+        fetch('/api/last-session.json').then(res => res.json())
     ])
+
+    let sales = {}
+
+    if (lastSessionId.id !== salesBak.lastSessionId) {
+        sales = await fetch('/api/sales.json').then(res => res.json())
+    } else {
+        sales = salesBak.sales
+    }
 
     const productsWithStock = products.map(product => {
         product.stock = +product["quantité_produite"] - (+sales[product.id] || 0)
