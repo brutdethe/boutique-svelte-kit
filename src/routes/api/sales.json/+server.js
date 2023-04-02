@@ -1,3 +1,4 @@
+import fs from 'fs'
 import {
     error
 } from '@sveltejs/kit'
@@ -30,7 +31,7 @@ async function getPaidsSessionsIds(stripe, oldLastSessionId) {
             newLastSessionId = sessions[0].id
         }
 
-        const index = sessions.map((session) => session.id).indexOf(oldLastSessionId)
+        const index = sessions.map((session) => session.id).indexOf("cs_live_b1nHN51anFfKiRb7D2mIW6YynFGsntvjgvODlN5m4WM942NVlQLIQVpN7o")
 
         if (index !== -1) {
             sessions = sessions.slice(0, index + 1)
@@ -116,12 +117,21 @@ export const GET = async() => {
 
         const itemsGroupBy = getItemsGroupBy(items)
 
-        const salesJsonContent = {
+        const salesJsonString = JSON.stringify({
             lastSessionId,
             sales: itemsGroupBy,
-        }
+        })
 
-        return new Response(JSON.stringify(salesJsonContent), {
+        fs.writeFile('src/lib/data/sales.bak.json', salesJsonString, (err) => {
+            if (err) {
+                console.error(err)
+                throw error(500, {
+                    message: "Error to write -sales.bak.json-  JSON file"
+                })
+            }
+        })
+
+        return new Response(salesJsonString, {
             status: 200,
             headers: {
                 'Content-Type': 'application/json',
