@@ -2,7 +2,7 @@ import {
     error
 } from '@sveltejs/kit';
 import {
-    SECRET_stripe_sk
+    SECRET_stripe_key
 } from '$env/static/private'
 import Stripe from 'stripe'
 
@@ -18,7 +18,7 @@ async function getLastSessionId(stripe) {
 
 export const GET = async() => {
     try {
-        const stripe = new Stripe(SECRET_stripe_sk)
+        const stripe = new Stripe(SECRET_stripe_key)
         const lastCheckoutSessionId = await getLastSessionId(stripe)
 
         return new Response(JSON.stringify(lastCheckoutSessionId), {
