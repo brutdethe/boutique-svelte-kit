@@ -18,12 +18,14 @@ async function getLastSessionId(stripe) {
 
 export const GET = async() => {
     try {
-        const stripeKeySk = SECRET_stripe_sk
-        const stripe = new Stripe(stripeKeySk)
+        const stripe = new Stripe(SECRET_stripe_sk)
         const lastCheckoutSessionId = await getLastSessionId(stripe)
 
         return new Response(JSON.stringify(lastCheckoutSessionId), {
-            status: 200
+            status: 200,
+            headers: {
+                'Content-Type': 'application/json',
+            }
         })
     } catch (err) {
         throw error(500, {

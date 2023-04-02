@@ -94,8 +94,7 @@ function getItemsGroupBy(items) {
 
 export const GET = async() => {
     try {
-        const stripeSecretKey = SECRET_stripe_sk
-        const stripe = new Stripe(stripeSecretKey, {
+        const stripe = new Stripe(SECRET_stripe_sk, {
             telemetry: false
         })
 
