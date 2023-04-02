@@ -31,7 +31,7 @@ async function getPaidsSessionsIds(stripe, oldLastSessionId) {
             newLastSessionId = sessions[0].id
         }
 
-        const index = sessions.map((session) => session.id).indexOf("cs_live_b1nHN51anFfKiRb7D2mIW6YynFGsntvjgvODlN5m4WM942NVlQLIQVpN7o")
+        const index = sessions.map((session) => session.id).indexOf(oldLastSessionId)
 
         if (index !== -1) {
             sessions = sessions.slice(0, index + 1)
