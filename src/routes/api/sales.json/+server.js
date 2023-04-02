@@ -3,7 +3,7 @@ import {
     error
 } from '@sveltejs/kit'
 import {
-    SECRET_stripe_sk
+    SECRET_stripe_key
 } from '$env/static/private'
 import Stripe from 'stripe'
 import salesBackup from '$lib/data/sales.bak.json'
@@ -94,7 +94,7 @@ function getItemsGroupBy(items) {
 
 export const GET = async() => {
     try {
-        const stripe = new Stripe(SECRET_stripe_sk, {
+        const stripe = new Stripe(SECRET_stripe_key, {
             telemetry: false
         })
 
