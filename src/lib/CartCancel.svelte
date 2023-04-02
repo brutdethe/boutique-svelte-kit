@@ -28,7 +28,7 @@
 			</div>
 			<p class="empty-title h5">{dict.message[$language]}</p>
 			<div class="empty-action">
-				<a href={$language === 'fr' ? '.' : `${$language}/`} class="back-shop">
+				<a href="/" class="back-shop">
 					&lsaquo; {dict.backToShop[$language]}
 				</a>
 			</div>
