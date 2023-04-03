@@ -1,57 +1,56 @@
 <script>
-	import { language, basket, currency, rate, country } from '$lib/stores.js'
-	import Price from '$lib//Price.svelte'
-	import Countries from '$lib/Countries.svelte'
-	import colissimo from '$lib/data/shipping.json'
-	import {
-    	PUBLIC_stripe_key
-	} from '$env/static/public'
-	import {loadStripe} from '@stripe/stripe-js/pure';
+	import { language, basket, currency, rate, country } from '$lib/stores.js';
+	import Price from '$lib//Price.svelte';
+	import Countries from '$lib/Countries.svelte';
+	import colissimo from '$lib/data/shipping.json';
+	import { PUBLIC_stripe_key } from '$env/static/public';
+	import { loadStripe } from '@stripe/stripe-js/pure';
 
-	let dataDomain
+	let dataDomain;
 
 	async function checkout() {
-		const stripe = await loadStripe(PUBLIC_stripe_key)
-		const data = {
-			basket: $basket,
-			language: $language,
-			shipping: shipping,
-			rate: $rate,
-			currency: $currency,
-			country: $country
-		}
+	const stripe = await loadStripe(PUBLIC_stripe_key);
+	const data = {
+		basket: $basket,
+		language: $language,
+		shipping: shipping,
+		rate: $rate,
+		currency: $currency,
+		country: $country
+	};
 
-		fetch('/api/checkout-session-id.json', {
-			method: 'POST',
-			body: JSON.stringify(data),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
-			.then(r => r.json())
-			.then(result => stripe.redirectToCheckout({ sessionId: result.session.id }))
-			.catch(err => {
-				console.log('POST error', err.message);
-			});
+	try {
+		const response = await fetch('/api/checkout-session-id.json', {
+		method: 'POST',
+		body: JSON.stringify(data),
+		headers: {
+			'Content-Type': 'application/json'
+		}
+		});
+		const result = await response.json();
+		stripe.redirectToCheckout({ sessionId: result.session.id });
+	} catch (err) {
+		console.log('POST error', err.message);
+	}
 	}
 
 	function shippingCost(basket, country, currency, rate, colissimo) {
-		const weightTotal = basket.reduce((acc, product) => product.poids * product.qty + acc + .1 , 0) || 0
-		const priceEuros = colissimo[country].filter(rate => weightTotal <= rate.limit)[0].EUR
-
-		return +priceEuros
+		const weightTotal = basket.reduce((acc, product) => product.poids * product.qty + acc + .1, 0) || 0;
+		const priceEuros = colissimo[country].find(rate => weightTotal <= rate.limit).EUR
+		
+		return +priceEuros;
 	}
 
 	function calculateSubTotal(basket, currency) {
-		return basket.reduce((acc, product) => product.prix * product.qty + acc, 0)
+		return basket.reduce((acc, product) => product.prix * product.qty + acc, 0);
 	}
 
-	$: subTotal = calculateSubTotal($basket, 'EUR')
-	$: shipping = shippingCost($basket, $country, $currency, $rate, colissimo)
-	$: total = +shipping + +subTotal
+	$: subTotal = calculateSubTotal($basket, 'EUR');
+	$: shipping = shippingCost($basket, $country, $currency, $rate, colissimo);
+	$: total = shipping + subTotal;
 
 	function deleteClick(id) {
-		$basket = $basket.filter(product => product.id !== id)
+	$basket = $basket.filter(product => product.id !== id);
 	}
 
 	const dict = {
