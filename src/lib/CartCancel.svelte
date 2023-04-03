@@ -4,8 +4,8 @@
 	const dict = {
 		title: { en: 'Purchases made', fr: 'Achats non effectué' },
 		message: {
-			en: 'Thank you.',
-			fr: 'Merci.'
+			en: 'Sorry, payment could not be made.',
+			fr: 'Désolé, le paiement n\'a pas pu être effectué.'
 		},
 		backToShop: {
 			en: 'back to the store',
