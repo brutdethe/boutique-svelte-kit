@@ -8,16 +8,15 @@ export function replaceLanguageInUrl(url, lang) {
 }
 
 export function slugify(str) {
-    str = str.replace(/^\s+|\s+$/g, '')
-    str = str.toLowerCase()
+    str = str.trim().toLowerCase()
 
-    const from = "àáäâǎèéëêìíïîòóöôùúüûñç·/_,:;";
-    const to = "aaaaaeeeeiiiioooouuuunc------";
+    const from = "àáäâǎèéëêìíïîòóöôùúüûñç·/_,:;"
+    const to = "aaaaaeeeeiiiioooouuuunc------"
 
-    from.split('').map(function(char, index) {
-        const regex = new RegExp(char, 'g')
-        str = str.replace(regex, to[index])
-    })
+    for (let i = 0, len = from.length; i < len; i++) {
+        const regex = new RegExp(from.charAt(i), 'g')
+        str = str.replace(regex, to.charAt(i))
+    }
 
     str = str.replace(/[^a-z0-9 -]/g, '')
         .replace(/\s+/g, '-')
@@ -27,5 +26,6 @@ export function slugify(str) {
     return str
 }
 
-export const findCategoryItemBySlugTitre = (categories, slugTitre, language, slugify) =>
-    Object.values(categories).filter(category => slugify(category.titre[language]) === slugTitre)[0]
+export function findCategoryItemBySlugTitre(categories, slugTitre, language, slugify) {
+    return Object.values(categories).find(category => slugify(category.titre[language]) === slugTitre)
+}
