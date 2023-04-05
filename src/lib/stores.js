@@ -10,14 +10,13 @@ const githubRepoName = PUBLIC_github_data_repo
 const getGhUrl = (repo, file) =>
     `https://raw.githubusercontent.com/${repo}/main/${file}`
 
-const storedLanguage = 'fr'
 const storedCurrency = 'EUR'
 const storedCountry = 'france'
 const storedBasket = []
 const storedRate = 1.1
 
-export const language = writable(storedLanguage)
-export const categorySelected = writable(0)
+export const language = writable(null)
+export const category = writable(null)
 export const currency = writable(storedCurrency)
 export const country = writable(storedCountry)
 export const basket = writable(storedBasket)

@@ -1,28 +1,25 @@
 <script>
     import { goto } from '$app/navigation'
-	import { language, categorySelected } from '$lib/stores.js'
+	import { language, category } from '$lib/stores.js'
     import Category from '$lib/Categories.svelte'
     import Photo from '$lib/Photo.svelte'
 	import Buy from '$lib/Buy.svelte'
 	import Price from '$lib/Price.svelte'
 	import Loading from '$lib/Loading.svelte'
+	import {slugify} from '$lib/utils.js'
 
-	export let categories
-	export let productsWithStock
+	export let data
 
-	// Old version: categories.json
-	if (!Array.isArray(categories)) {
-		categories =  Object.values(categories)
-	}
+	const productsWithStock = data.productsWithStock
+	let categories = data.categories
 
 	function getProductsByCategory(products, category) {
+
 		return products
-			.filter(item => item.catégorie === category)
+			.filter(item => item.catégorie === category.label)
 			.sort((a, b) => new Date(b.création) - new Date(a.création))
 	}
 
-	const slugify = (string) => string.replace(/\s/g,'-').replace(/---/g,'-')
-	
 	const dict = {
 		url: {
 			en: "product",
@@ -70,7 +67,7 @@
 </style>
 
 <svelte:head>
-	<title>{dict.title[$language]} - {categories[$categorySelected].titre[$language]}</title>
+	<title>{dict.title[$language]} - {$category.titre[$language]}</title>
 </svelte:head>
 
 <header>
@@ -79,7 +76,7 @@
 <section>
 	<div class="columns">
 		{#if productsWithStock}
-		{#each getProductsByCategory(productsWithStock, categories[$categorySelected].label) as product}
+		{#each getProductsByCategory(productsWithStock, $category) as product}
 			<div class="column col-4 col-xs-12">
 				<article class="card">
 					<div class="card-header">

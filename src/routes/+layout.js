@@ -1,12 +1,30 @@
 import {
+    redirect
+} from '@sveltejs/kit'
+import {
+    error
+} from '@sveltejs/kit'
+import {
     PUBLIC_github_data_repo
 } from '$env/static/public'
 import salesBak from '$lib/data/sales.bak.json'
+import {
+    slugify,
+    findCategoryItemBySlugTitre
+} from '$lib/utils.js'
 
-/** @type {import('../../.svelte-kit/types/src/routes/$types').PageLoad} */
 export async function load({
-    fetch
+    params,
+    route,
+    fetch,
+    url
 }) {
+
+    if (params.lang && !/^en$|^fr$/i.test(params.lang)) {
+        throw error(404, {
+            message: 'Not found - Language Error'
+        })
+    }
 
     const githubRepoName = PUBLIC_github_data_repo
 
@@ -27,6 +45,21 @@ export async function load({
         fetch('/api/last-session.json').then(res => res.json())
     ])
 
+    if (url.pathname === '/') {
+        const defaultLanguage = 'fr'
+        const defaultCategory = slugify(Object.values(categories)[0].titre[defaultLanguage])
+
+        throw redirect(302, `/${defaultLanguage}/${defaultCategory}`)
+    }
+
+    const notCategoryParams = (route.id === '/[lang]/[categories]') ? !findCategoryItemBySlugTitre(categories, params.categories, params.lang, slugify) : false
+
+    if (notCategoryParams) {
+        throw error(404, {
+            message: 'Not found - Category Error'
+        })
+    }
+
     let sales = {}
 
     if (lastSessionId.id !== salesBak.lastSessionId) {
@@ -40,9 +73,13 @@ export async function load({
         return product
     }).filter(product => product.stock > 0)
 
+    const categorySelected = params.categories ? findCategoryItemBySlugTitre(categories, params.categories, params.lang, slugify) : null
+
     return {
         setup,
         categories,
-        productsWithStock
+        productsWithStock,
+        categorySelected,
+        languageSelected: params.lang
     }
 }

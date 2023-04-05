@@ -1,10 +1,14 @@
 <script>
-	import { language, categorySelected } from './stores.js'
+  import { goto } from '$app/navigation'
+	import { language, category } from './stores.js'
+	import { slugify } from '$lib/utils.js'
+
 	export let categories
 	
-    function changeCategory(evt) {
-		$categorySelected = evt.target.getAttribute('data-id')
-
+	function changeCategory(evt) {
+		$category = JSON.parse(evt.target.getAttribute('value'))
+		goto(`/${$language}/${slugify($category.titre[$language])}`)
+		
 		return
 	}
 
@@ -32,29 +36,20 @@
 	}
 </style>
 
-{#if categories[$categorySelected]}
-	<div class="hero-sm bg-primary">
-		<div class="hero-body">
-			<h3>{categories[$categorySelected].titre[$language]}</h3>
-			<p>{categories[$categorySelected].description[$language]}</p>
-		</div>
+<div class="hero-sm bg-primary">
+	<div class="hero-body">
+		<h3>{$category.titre[$language]}</h3>
+		<p>{$category.description[$language]}</p>
 	</div>
-
-	{#if categories.length > 1}
-		<div class="btn-list">
-			{#each categories as category, index}
-				{#if category.titre[$language]}
-					<button
-						class="btn btn-sm {category.titre[$language] === categories[$categorySelected].titre[$language] ? 'btn-primary' : ''}"
-						on:click={changeCategory}
-						data-id={index}
-						value={category}>
-							{category.titre[$language]}
-					</button>
-				{/if}
-			{/each}
-		</div>
-	{/if}
-{/if}
-
+</div>
+<div class="btn-list">
+	{#each Object.values(categories) as categoryItem}
+		<button
+			class="btn btn-sm {categoryItem.titre[$language] === $category.titre[$language] ? 'btn-primary' : ''}"
+			on:click={changeCategory}
+			value={JSON.stringify(categoryItem)}>
+				{categoryItem.titre[$language]}
+		</button>
+	{/each}
+</div>
 <hr />
