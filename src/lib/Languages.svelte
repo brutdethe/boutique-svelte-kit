@@ -12,6 +12,10 @@
 		return 
 	}
 
+	if (browser) {
+		console.log("navigator", navigator.language)
+	}
+
 	const handlePopStateEvent = async({state}) => {
 		$language = state['$language']
 	}
@@ -20,8 +24,8 @@
 	if ($page.params.lang === 'fr' || $page.params.lang === 'en') {
 		$language = $page.params.lang
 	} else {
-		$language = 'en'
 		if (browser) {
+			$language = navigator.language
 		    history.pushState({ $language }, '', replaceLanguageInUrl(location, $language))
 		}
 	}
