@@ -1,4 +1,5 @@
 <script>
+    import {browser} from '$app/environment'
 	import {page} from '$app/stores'
     import { slugify } from '$lib/utils.js'
     import Currencies from '$lib/Currencies.svelte' 
@@ -9,6 +10,10 @@
 
     $category = data.categorySelected ? data.categorySelected : Object.values(data.categories)[0]
     $language = data.languageSelected
+    
+    if (browser && !$language) {
+        $language = navigator.language
+    }
 
     const basketCount = basket => basket.reduce((acc, product) => product.qty + acc, 0)
 
@@ -118,13 +123,13 @@
 
 <header class="columns">
     <h1 class="title column col-3 col-md-12">
-        <a href="/{$language}/{slugify($category.titre[$language])}">
+        <a href="/{$language}/{slugify($category.titre[$language || 'en'])}">
             <img src="{data.setup.logo}" alt="logo boutique" class="logo">
         </a>
     </h1>
     <nav class="column col-7 col-md-9 col-sm-12">
         <ul>
-            <li><a href="/{$language}/{slugify($category.titre[$language])}">{dict.nav_shop[$language]}</a></li>
+            <li><a href="/{$language}/{slugify($category.titre[$language || 'en'])}">{dict.nav_shop[$language]}</a></li>
             <li><a href="{data.setup.a_propos}">{dict.nav_about[$language]}</a></li>
             <li>
                 <a href="/{$language}/{dict.nav_basket_url[$language]}">

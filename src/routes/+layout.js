@@ -17,6 +17,7 @@ export async function load({
     fetch,
     url
 }) {
+
     if (params.lang && !/^en$|^fr$/i.test(params.lang)) {
         throw error(404, {
             message: 'Not found - Language Error'
@@ -40,7 +41,7 @@ export async function load({
     ])
 
     if (url.pathname === '/') {
-        const defaultLanguage = 'fr'
+        const defaultLanguage = 'en'
         const defaultCategory = slugify(Object.values(categories)[0].titre[defaultLanguage])
         throw redirect(302, `/${defaultLanguage}/${defaultCategory}`)
     }
