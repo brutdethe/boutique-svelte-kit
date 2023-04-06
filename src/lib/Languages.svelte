@@ -12,10 +12,6 @@
 		return 
 	}
 
-	if (browser) {
-		console.log("navigator", navigator.language)
-	}
-
 	const handlePopStateEvent = async({state}) => {
 		$language = state['$language']
 	}

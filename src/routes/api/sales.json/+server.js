@@ -123,7 +123,6 @@ export const GET = async() => {
 
         fs.writeFile('src/lib/data/sales.bak.json', salesJsonString, (err) => {
             if (err) {
-                console.error(err)
                 throw error(500, {
                     message: "Error to write -sales.bak.json-  JSON file"
                 })
