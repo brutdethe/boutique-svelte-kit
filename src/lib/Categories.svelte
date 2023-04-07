@@ -1,5 +1,5 @@
 <script>
-  import { goto } from '$app/navigation'
+    import { goto } from '$app/navigation'
 	import { language, category } from './stores.js'
 	import { slugify } from '$lib/utils.js'
 
