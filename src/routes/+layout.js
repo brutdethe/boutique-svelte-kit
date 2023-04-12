@@ -22,7 +22,7 @@ export async function load({
     url
 }) {
 
-    const defaultLanguage = navigator.language
+    let defaultLanguage = navigator.language
 
     if (params.lang && !/^en$|^fr$/i.test(params.lang)) {
         throw error(404, {
@@ -76,12 +76,15 @@ export async function load({
         .filter(product => product.stock > 0)
 
     const categorySelected = params.categories ? findCategoryItemBySlugTitre(categories, params.categories, params.lang, slugify) : null
+    const languageSelected = params.lang || defaultLanguage
+    const currencySelected = languageSelected === 'en' ? 'USD' : 'EUR'
 
     return {
         setup,
         categories,
         productsWithStock,
         categorySelected,
-        languageSelected: defaultLanguage
+        currencySelected,
+        languageSelected
     }
 }
