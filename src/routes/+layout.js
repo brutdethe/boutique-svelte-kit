@@ -1,7 +1,14 @@
+export const ssr = false
+
 import {
-    redirect,
     error
-} from '@sveltejs/kit'
+} from '@sveltejs/kit';
+import {
+    goto
+} from '$app/navigation'
+import {
+    language
+} from '$lib/stores.js'
 import {
     PUBLIC_github_data_repo
 } from '$env/static/public'
@@ -10,6 +17,9 @@ import {
     slugify,
     findCategoryItemBySlugTitre
 } from '$lib/utils.js'
+import {
+    LanguageServiceMode
+} from 'typescript';
 
 export async function load({
     params,
@@ -18,40 +28,38 @@ export async function load({
     url
 }) {
 
+    const defaultLanguage = navigator.language
+
     if (params.lang && !/^en$|^fr$/i.test(params.lang)) {
         throw error(404, {
-            message: 'Not found - Language Error'
-        })
+            message: 'Not found'
+        });
     }
-
-    const githubRepoName = PUBLIC_github_data_repo
 
     const loadData = async(repo, file) => {
         const getGhUrl = (repo, file) => `https://raw.githubusercontent.com/${repo}/main/${file}`
         const res = await fetch(getGhUrl(repo, file))
         const data = await res.json()
+
         return data
     }
 
     const [setup, categories, products, lastSessionId] = await Promise.all([
-        loadData(githubRepoName, 'setup.json'),
-        loadData(githubRepoName, 'categories.json'),
-        loadData(githubRepoName, 'produits.json'),
+        loadData(PUBLIC_github_data_repo, 'setup.json'),
+        loadData(PUBLIC_github_data_repo, 'categories.json'),
+        loadData(PUBLIC_github_data_repo, 'produits.json'),
         fetch('/api/last-session.json').then(res => res.json())
     ])
 
     if (url.pathname === '/') {
-        const defaultLanguage = 'en'
         const defaultCategory = slugify(Object.values(categories)[0].titre[defaultLanguage])
-        throw redirect(302, `/${defaultLanguage}/${defaultCategory}`)
+        goto(`/${defaultLanguage}/${defaultCategory}`)
     }
 
     const notCategoryParams = (route.id === '/[lang]/[categories]') && !findCategoryItemBySlugTitre(categories, params.categories, params.lang, slugify)
 
     if (notCategoryParams) {
-        throw error(404, {
-            message: 'Not found - Category Error'
-        })
+        goto('404')
     }
 
     let sales = {}
@@ -76,6 +84,6 @@ export async function load({
         categories,
         productsWithStock,
         categorySelected,
-        languageSelected: params.lang
+        languageSelected: defaultLanguage
     }
 }
