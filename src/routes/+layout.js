@@ -7,9 +7,6 @@ import {
     goto
 } from '$app/navigation'
 import {
-    language
-} from '$lib/stores.js'
-import {
     PUBLIC_github_data_repo
 } from '$env/static/public'
 import salesBak from '$lib/data/sales.bak.json'
@@ -17,9 +14,6 @@ import {
     slugify,
     findCategoryItemBySlugTitre
 } from '$lib/utils.js'
-import {
-    LanguageServiceMode
-} from 'typescript';
 
 export async function load({
     params,
@@ -33,7 +27,7 @@ export async function load({
     if (params.lang && !/^en$|^fr$/i.test(params.lang)) {
         throw error(404, {
             message: 'Not found'
-        });
+        })
     }
 
     const loadData = async(repo, file) => {
@@ -56,10 +50,14 @@ export async function load({
         goto(`/${defaultLanguage}/${defaultCategory}`)
     }
 
-    const notCategoryParams = (route.id === '/[lang]/[categories]') && !findCategoryItemBySlugTitre(categories, params.categories, params.lang, slugify)
+    if (params.lang && route.id === '/[lang]/[categories]') {
+        const isCategoryParams = findCategoryItemBySlugTitre(categories, params.categories, params.lang, slugify) ? true : false
 
-    if (notCategoryParams) {
-        goto('404')
+        if (!isCategoryParams) {
+            throw error(404, {
+                message: 'Not found'
+            })
+        }
     }
 
     let sales = {}
