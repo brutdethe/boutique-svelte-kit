@@ -1,10 +1,3 @@
-import {
-    language
-} from '$lib/stores.js'
-import {
-    get
-} from 'svelte/store'
-
 export async function handle({
     event,
     resolve
@@ -12,6 +5,6 @@ export async function handle({
     return resolve(event, {
         transformPageChunk: ({
             html
-        }) => html.replace('%lang%', get(language)),
+        }) => html.replace('%lang%', event.params.lang),
     })
 }
