@@ -1,19 +1,15 @@
 <script>
-    import {browser} from '$app/environment'
 	import {page} from '$app/stores'
     import { slugify } from '$lib/utils.js'
     import Currencies from '$lib/Currencies.svelte' 
     import Languages from '$lib/Languages.svelte' 
-    import { language, basket, category } from '$lib/stores.js'
-
+    import { language, basket, category, currency } from '$lib/stores.js'
+        
     export let data
 
     $category = data.categorySelected ? data.categorySelected : Object.values(data.categories)[0]
     $language = data.languageSelected
-    
-    if (browser && !$language) {
-        $language = navigator.language
-    }
+    $currency = data.currencySelected
 
     const basketCount = basket => basket.reduce((acc, product) => product.qty + acc, 0)
 
@@ -130,7 +126,7 @@
     <nav class="column col-7 col-md-9 col-sm-12">
         <ul>
             <li><a href="/{$language}/{slugify($category.titre[$language || 'en'])}">{dict.nav_shop[$language]}</a></li>
-            <li><a href="{data.setup.a_propos}">{dict.nav_about[$language]}</a></li>
+            <li><a href="{data.setup.a_propos}" target="blank">{dict.nav_about[$language]}</a></li>
             <li>
                 <a href="/{$language}/{dict.nav_basket_url[$language]}">
                     <span class="badge" data-badge="{basketCount($basket)}" data-initial="YZ">{dict.nav_basket[$language]}</span>
