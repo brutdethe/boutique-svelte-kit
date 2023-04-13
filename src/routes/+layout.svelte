@@ -126,7 +126,7 @@
     <nav class="column col-7 col-md-9 col-sm-12">
         <ul>
             <li><a href="/{$language}/{slugify($category.titre[$language || 'en'])}">{dict.nav_shop[$language]}</a></li>
-            <li><a href="{data.setup.a_propos}">{dict.nav_about[$language]}</a></li>
+            <li><a href="{data.setup.a_propos}" target="blank">{dict.nav_about[$language]}</a></li>
             <li>
                 <a href="/{$language}/{dict.nav_basket_url[$language]}">
                     <span class="badge" data-badge="{basketCount($basket)}" data-initial="YZ">{dict.nav_basket[$language]}</span>
