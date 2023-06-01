@@ -1,11 +1,13 @@
 <script>
     import { goto } from '$app/navigation'
 	import {page} from '$app/stores'
-	import { replaceLanguageInUrl } from '$lib/utils.js'
+	import {slugs} from '$lib/i18n'
+	import { findSlug, replaceLanguageInUrl } from '$lib/utils.js'
 	import { language } from '$lib/stores.js'
 
 	function changeLanguageSelected(evt) {
 		$language = evt.currentTarget.value
+		findSlug($page.url.pathname, $slugs, language)
 		goto(replaceLanguageInUrl($page.url.pathname, $language))
 		
 		return 

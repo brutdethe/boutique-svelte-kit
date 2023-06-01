@@ -4,6 +4,11 @@ export function replaceLanguageInUrl(pathname, lang) {
     return `/${[lang, ...rest].join('/')}`
 }
 
+export function findSlug(pathname, slugs, language) {
+
+    return slugs.find(slug => slug['fr'] === 'mentions-légales')
+}
+
 export function slugify(str) {
     str = str.trim().toLowerCase()
 
