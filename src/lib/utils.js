@@ -10,6 +10,8 @@ export function findSlug(pathname, slugs, language) {
 }
 
 export function slugify(str) {
+    console.log('Test Maelle 1', str)
+    console.log('Test Maelle 2', str.trim().toLowerCase())
     str = str.trim().toLowerCase()
 
     const from = "àáäâǎèéëêìíïîòóöôùúüûñç·/_,:;"
