@@ -9,9 +9,7 @@ export function findSlug(pathname, slugs, language) {
     return slugs.find(slug => slug['fr'] === 'mentions-légales')
 }
 
-export function slugify(str) {
-    console.log('Test Maelle 1', str)
-    console.log('Test Maelle 2', str.trim().toLowerCase())
+export function slugify(str = '') {
     str = str.trim().toLowerCase()
 
     const from = "àáäâǎèéëêìíïîòóöôùúüûñç·/_,:;"
