@@ -14,7 +14,8 @@
 	let categories = data.categories
 
 	function getProductsByCategory(products, category) {
-
+		console.log('category', category)
+		console.log('products', category.label)
 		return products
 			.filter(item => item.catégorie === category.label)
 			.sort((a, b) => new Date(b.création) - new Date(a.création))
@@ -91,7 +92,7 @@
 						</a>
 					</div>
 					<div class="card-body">
-						<p class="description">{product.description[$language]}</p>
+						<p class="description">{@html product.description[$language]}</p>
 						<h3 class="price">
 						    <Price price={product.prix} />
 						</h3>
