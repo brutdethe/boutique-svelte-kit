@@ -1,5 +1,3 @@
-export const ssr = false
-
 import {
     error
 } from '@sveltejs/kit';
@@ -22,7 +20,12 @@ export async function load({
     url
 }) {
 
-    let defaultLanguage = navigator.language
+    const isClient = !(typeof window === "undefined")
+    let defaultLanguage = 'fr'
+
+    if (isClient) {
+        defaultLanguage = navigator.language
+    }
 
     if (params.lang && !/^en$|^fr$/i.test(params.lang)) {
         throw error(404, {
@@ -45,7 +48,7 @@ export async function load({
         fetch('/api/last-session.json').then(res => res.json())
     ])
 
-    if (url.pathname === '/') {
+    if (url.pathname === '/' && isClient) {
         const defaultCategory = slugify(Object.values(categories)[0].titre[defaultLanguage])
         goto(`/${defaultLanguage}/${defaultCategory}`)
     }

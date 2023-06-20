@@ -14,8 +14,6 @@
 	let categories = data.categories
 
 	function getProductsByCategory(products, category) {
-		console.log('category', category)
-		console.log('products', category.label)
 		return products
 			.filter(item => item.catégorie === category.label)
 			.sort((a, b) => new Date(b.création) - new Date(a.création))
