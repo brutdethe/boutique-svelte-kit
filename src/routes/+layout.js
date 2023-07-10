@@ -36,7 +36,7 @@ export async function load({
     const loadData = async(repo, file) => {
         const getGhUrl = (repo, file) => `https://raw.githubusercontent.com/${repo}/main/${file}`
 
-        const res = await fetch(getGhUrl(repo, file))
+        const data = await fetch(getGhUrl(repo, file))
             .then(res => {
                 if (res.status === 404) {
                     console.error(`impossible de trouver le fichier : ${getGhUrl(repo, file)}`)
@@ -45,8 +45,14 @@ export async function load({
 
                 return res
             })
-
-        const data = await res.json()
+            .then(res => {
+                try {
+                    return res.json()
+                } catch (error) {
+                    console.error(`can't convert this file : ${getGhUrl(repo, file)}`)
+                    throw error(500)
+                }
+            })
 
         return data
     }
