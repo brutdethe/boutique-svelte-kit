@@ -18,10 +18,6 @@
 			en: 'Weight',
 			fr: 'Poids'
 		},
-		size: {
-			en: 'Size',
-			fr: 'Dimensions'
-		},
 		card: {
 			en: 'Card',
 			fr: 'Fiche'
@@ -30,25 +26,6 @@
 			en: 'Stock',
 			fr: 'Stock'
 		}
-	}
-
-	function getSize(size, lang) {
-		const sentence = [];
-		if ('largeur' in size) {
-			if (lang === 'en') {
-				sentence.push(`width: ${(size.largeur * 0.393701).toFixed(2)}in`);
-			} else {
-				sentence.push(`lg: ${size.largeur}cm`);
-			}
-		}
-		if ('hauteur' in size) {
-			if (lang === 'en') {
-				sentence.push(`height: ${(size.hauteur * 0.393701).toFixed(2)}in`);
-			} else {
-				sentence.push(`ht: ${size.hauteur}cm`);
-			}
-		}
-		return sentence.join(' x ');
 	}
 
 	function getStock(stock, lang) {
