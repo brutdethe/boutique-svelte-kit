@@ -1,11 +1,13 @@
 <script>
-	import { language } from '$lib/stores.js'
+	import { language, characteristics } from '$lib/stores.js'
     import Buy from '$lib/Buy.svelte'
     import Photo from '$lib/Photo.svelte'
     import Price from '$lib/Price.svelte'
     import ProductNotFound from '$lib/ProductNotFound.svelte'
 
     export let data
+
+	console.log("characteristics", $characteristics)
 
     const product = data.productsWithStock.filter(item => item.id === data.productIdParam)[0]
 
@@ -204,6 +206,11 @@
             </div>
             <div class="card-body">
                 <p>{product.description[$language]}</p>
+				<dl>
+				{$characteristics[0].label[$language]}
+					<dt></dt>
+				</dl>
+				<!--
                 <dl>
                     {#if 'cultivar' in product}
                         <dt>{dict.cultivar[$language]} :&nbsp;</dt>
@@ -240,6 +247,7 @@
                     <dt>{dict.stock[$language]} :&nbsp;</dt>
                     <dd>{getStock(product.stock, $language)}</dd>
                 </dl>
+				-->
             </div>
             <div class="card-footer">
                 <h3 class="card-title h1 price">

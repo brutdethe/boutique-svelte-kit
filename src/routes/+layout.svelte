@@ -3,13 +3,14 @@
     import { slugify } from '$lib/utils.js'
     import Currencies from '$lib/Currencies.svelte' 
     import Languages from '$lib/Languages.svelte' 
-    import { language, basket, category, currency } from '$lib/stores.js'
+    import { language, basket, category, currency, characteristics } from '$lib/stores.js'
         
     export let data
 
     $category = data.categorySelected ? data.categorySelected : Object.values(data.categories)[0]
     $language = data.languageSelected
     $currency = data.currencySelected
+    $characteristics = data.characteristics
 
     const basketCount = basket => basket.reduce((acc, product) => product.qty + acc, 0)
 

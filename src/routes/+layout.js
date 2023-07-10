@@ -51,7 +51,7 @@ export async function load({
         return data
     }
 
-    const [setup, categories, products, lastSessionId] = await Promise.all([
+    const [setup, characteristics, categories, products, lastSessionId] = await Promise.all([
         loadData(PUBLIC_github_data_repo, 'setup.json'),
         loadData(PUBLIC_github_data_repo, 'caracteristiques.json'),
         loadData(PUBLIC_github_data_repo, 'categories.json'),
@@ -96,6 +96,7 @@ export async function load({
     return {
         setup,
         categories,
+        characteristics,
         productsWithStock,
         categorySelected,
         currencySelected,

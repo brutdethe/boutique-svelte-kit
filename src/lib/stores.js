@@ -16,6 +16,7 @@ const storedRate = 1.1
 
 export const language = writable(null)
 export const category = writable(null)
+export const characteristics = writable(null)
 export const currency = writable(null)
 export const country = writable(storedCountry)
 export const basket = writable(storedBasket)
