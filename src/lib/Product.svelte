@@ -5,17 +5,30 @@
     import Price from '$lib/Price.svelte'
     import ProductNotFound from '$lib/ProductNotFound.svelte'
 
-    export let data
-
-	console.log("characteristics", $characteristics)
+	export let data
 
     const product = data.productsWithStock.filter(item => item.id === data.productIdParam)[0]
 
-	function getWeight(weight, lang) {
-		if (lang === 'en') {
-			return `${(weight * 35.274).toFixed(2)}oz`;
-		} else {
-			return `${weight * 1000}g`;
+ const dict = {
+		title: {
+			en: "product sheet",
+			fr: 'fiche produit'
+		},
+		weight: {
+			en: 'Weight',
+			fr: 'Poids'
+		},
+		size: {
+			en: 'Size',
+			fr: 'Dimensions'
+		},
+		card: {
+			en: 'Card',
+			fr: 'Fiche'
+        },
+        stock: {
+			en: 'Stock',
+			fr: 'Stock'
 		}
 	}
 
@@ -43,77 +56,6 @@
 			return `${stock} item${stock > 1 ? 's' : ''} left`;
 		} else {
 			return `il reste ${stock} article${stock > 1 ? 's' : ''}`;
-		}
-	}
-
-	function getCapacity(capacity, lang) {
-		if (lang === 'en') {
-			return `${(capacity * 0.03381).toFixed(2)}oz`;
-		} else {
-			return `${capacity}ml`;
-		}
-	}
-
-	function getElevation(elevation, lang) {
-		if (lang === 'en') {
-			return `${Math.round(elevation * 3.2808)}ft`;
-		} else {
-			return `${elevation}m`;
-		}
-    }
-    
-    const dict = {
-		title: {
-			en: "product sheet",
-			fr: 'fiche produit'
-		},
-		weight: {
-			en: 'Weight',
-			fr: 'Poids'
-		},
-		size: {
-			en: 'Size',
-			fr: 'Dimensions'
-		},
-		capacity: {
-			en: 'Capacity',
-			fr: 'Capacité'
-		},
-		location: {
-			en: 'Location',
-			fr: 'Lieu'
-		},
-		cultivar: {
-			en: 'Cultivar',
-			fr: 'Cultivar'
-        },
-        location: {
-			en: 'Location',
-			fr: 'Village'
-		},
-		type: {
-			en: 'Type',
-			fr: 'Type'
-		},
-		producer: {
-			en: 'Producer',
-			fr: 'Producteur'
-		},
-		elevation: {
-			en: 'Elevation',
-			fr: 'Altitude'
-		},
-		card: {
-			en: 'Card',
-			fr: 'Fiche'
-        },
-        stock: {
-			en: 'Stock',
-			fr: 'Stock'
-		},
-		vintage: {
-			en: 'Vintage',
-			fr: 'Millésime'
 		}
 	}
 </script>
@@ -205,49 +147,21 @@
                 <div class="card-title h4">{product.titre[$language]}</div>
             </div>
             <div class="card-body">
-                <p>{product.description[$language]}</p>
+                <p>{@html product.description[$language]}</p>
 				<dl>
-				{$characteristics[0].label[$language]}
-					<dt></dt>
-				</dl>
-				<!--
-                <dl>
-                    {#if 'cultivar' in product}
-                        <dt>{dict.cultivar[$language]} :&nbsp;</dt>
-                        <dd>{product.cultivar}</dd>
-                    {/if}
-                    {#if 'producteur' in product}
-                        <dt>{dict.producer[$language]} :&nbsp;</dt>
-                        <dd>{product.producteur}</dd>
-                    {/if}
-                    {#if 'village' in product || 'province' in product}
-                        <dt>{dict.location[$language]} :&nbsp;</dt>
-                        <dd>{product.village || ''} - {product.province || ''}</dd>
-                    {/if}
-                    {#if 'altitude' in product}
-                        <dt>{dict.elevation[$language]} :&nbsp;</dt>
-                        <dd>{getElevation(product.altitude, $language)}</dd>
-                    {/if}
-                    {#if 'millésime' in product}
-                        <dt>{dict.vintage[$language]} :&nbsp;</dt>
-                        <dd>{product.millésime}</dd>
-                    {/if}
-                    {#if 'capacité' in product}
-                        <dt>{dict.capacity[$language]} :&nbsp;</dt>
-                        <dd>{getCapacity(product.capacité, $language)}</dd>
-                    {/if}
+					{#each $characteristics as characteristic}
+						{#if (product[characteristic.name])}
+							<dt>{characteristic.label[$language]}{@html $language === 'fr' ? '&nbsp;' : ''}:&nbsp;</dt>
+							<dd>{product[characteristic.name][$language] ? product[characteristic.name][$language] : product[characteristic.name]}</dd>
+						{/if}
+					{/each}
                     {#if 'poids' in product}
-                        <dt>{dict.weight[$language]} :&nbsp;</dt>
-                        <dd>{getWeight(product.poids, $language)}</dd>
+                        <dt>{dict.weight[$language]}{@html $language === 'fr' ? '&nbsp;' : ''}:&nbsp;</dt>
+                        <dd>{product.poids*1000} g</dd>
                     {/if}
-                    {#if 'dimension' in product}
-                        <dt>{dict.size[$language]} :&nbsp;</dt>
-                        <dd>{getSize(product.dimension, $language)}</dd>
-                    {/if}
-                    <dt>{dict.stock[$language]} :&nbsp;</dt>
+                    <dt>{dict.stock[$language]}{@html $language === 'fr' ? '&nbsp;' : ''}:&nbsp;</dt>
                     <dd>{getStock(product.stock, $language)}</dd>
                 </dl>
-				-->
             </div>
             <div class="card-footer">
                 <h3 class="card-title h1 price">
