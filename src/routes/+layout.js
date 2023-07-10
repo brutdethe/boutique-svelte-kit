@@ -35,7 +35,17 @@ export async function load({
 
     const loadData = async(repo, file) => {
         const getGhUrl = (repo, file) => `https://raw.githubusercontent.com/${repo}/main/${file}`
+
         const res = await fetch(getGhUrl(repo, file))
+            .then(res => {
+                if (res.status === 404) {
+                    console.error(`impossible de trouver le fichier : ${getGhUrl(repo, file)}`)
+                    throw error(500)
+                }
+
+                return res
+            })
+
         const data = await res.json()
 
         return data
@@ -43,6 +53,7 @@ export async function load({
 
     const [setup, categories, products, lastSessionId] = await Promise.all([
         loadData(PUBLIC_github_data_repo, 'setup.json'),
+        loadData(PUBLIC_github_data_repo, 'caracteristiques.json'),
         loadData(PUBLIC_github_data_repo, 'categories.json'),
         loadData(PUBLIC_github_data_repo, 'produits.json'),
         fetch('/api/last-session.json').then(res => res.json())
