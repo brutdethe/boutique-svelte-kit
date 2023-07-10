@@ -10,12 +10,12 @@ const dict = {
         fr: "Frais de transport"
     },
     pageSuccess: {
-        en: "cart-ok",
-        fr: "panier-ok"
+        en: "/en/cart-ok",
+        fr: "/fr/panier-ok"
     },
     pageCancel: {
-        en: "cart-cancel",
-        fr: "panier-abandon"
+        en: "/en/cart-cancel",
+        fr: "/fr/panier-abandon"
     }
 }
 
