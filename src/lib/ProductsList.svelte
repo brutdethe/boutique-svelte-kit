@@ -74,7 +74,6 @@
 </header>
 <section>
 	<div class="columns">
-		{#if productsWithStock}
 		{#each getProductsByCategory(productsWithStock, $category) as product}
 			<div class="column col-4 col-xs-12">
 				<article class="card">
@@ -109,8 +108,5 @@
 				</article>
 			</div>
 		{/each}
-		{:else}
-			<Loading />
-		{/if}
 	</div>
 </section>
