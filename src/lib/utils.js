@@ -5,7 +5,6 @@ export function replaceLanguageInUrl(pathname, lang) {
 }
 
 export function slugify(str) {
-    console.log("trim", str)
     str = str.trim().toLowerCase()
 
     const from = "àáäâǎèéëêìíïîòóöôùúüûñç·/_,:;"

@@ -24,7 +24,7 @@ export async function load({
     let defaultLanguage = 'fr'
 
     if (isClient) {
-        defaultLanguage = navigator.language
+        defaultLanguage = navigator.language.substring(0, 2)
     }
 
     if (params.lang && !/^en$|^fr$/i.test(params.lang)) {
