@@ -34,19 +34,19 @@
 	}
 	}
 
-	function shippingCost(basket, country, currency, rate, colissimo) {
-		const weightTotal = basket.reduce((acc, product) => product.poids * product.qty + acc + .1, 0) || 0;
+	function shippingCost(basket, country, colissimo) {
+		const weightTotal = basket.reduce((acc, product) => (product.poids || 0) * (product.qty || 0) + acc, 0);
 		const priceEuros = colissimo[country].find(rate => weightTotal <= rate.limit).EUR
 		
 		return +priceEuros;
 	}
 
-	function calculateSubTotal(basket, currency) {
+	function calculateSubTotal(basket) {
 		return basket.reduce((acc, product) => product.prix * product.qty + acc, 0);
 	}
 
-	$: subTotal = calculateSubTotal($basket, 'EUR');
-	$: shipping = shippingCost($basket, $country, $currency, $rate, colissimo);
+	$: subTotal = calculateSubTotal($basket);
+	$: shipping = shippingCost($basket, $country, colissimo);
 	$: total = shipping + subTotal;
 
 	function deleteClick(id) {
